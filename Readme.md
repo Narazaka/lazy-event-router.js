@@ -9,7 +9,8 @@
 
 [![Dependency Status](https://david-dm.org/Ikagaka/routable-component.js.svg)](https://david-dm.org/Ikagaka/routable-component.js)
 [![devDependency Status](https://david-dm.org/Ikagaka/routable-component.js/dev-status.svg)](https://david-dm.org/Ikagaka/routable-component.js#info=devDependencies)
-[![Build Status](https://travis-ci.org/Ikagaka/routable-component.js.svg)](https://travis-ci.org/Ikagaka/routable-component.js)
+[![Travis Build Status](https://travis-ci.org/Ikagaka/routable-component.js.svg)](https://travis-ci.org/Ikagaka/routable-component.js)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Ikagaka/routable-component.js?svg=true)](https://ci.appveyor.com/project/Ikagaka/routable-component-js)
 [![codecov.io](https://codecov.io/github/Ikagaka/routable-component.js/coverage.svg?branch=master)](https://codecov.io/github/Ikagaka/routable-component.js?branch=master)
 [![Code Climate](https://codeclimate.com/github/Ikagaka/routable-component.js/badges/gpa.svg)](https://codeclimate.com/github/Ikagaka/routable-component.js)
 
