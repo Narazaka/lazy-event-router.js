@@ -1,0 +1,15 @@
+{
+  "name": "routable-component",
+  "description": "Routable component",
+  "dependencies": {
+  },
+  "main": ["./lib/routable-component.js"],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "npm-debug.log",
+    "coverage"
+  ],
+  "license": "MIT"
+}
