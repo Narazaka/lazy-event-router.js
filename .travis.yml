@@ -5,9 +5,9 @@ os:
   - linux
   - osx
 before_script:
-  - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
-  - if [ -e /etc/init.d/xvfb ] ; then sh -e /etc/init.d/xvfb start ; fi
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export CHROME_BIN=chromium-browser ; fi
+  - if [ "${TRAVIS_OS_NAME}" = "linux" ]; then sh -e /etc/init.d/xvfb start ; fi
   - sleep 3 # give xvfb some time to start
 after_success:
   - bash <(curl -s https://codecov.io/bash)
