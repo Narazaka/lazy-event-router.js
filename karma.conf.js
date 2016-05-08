@@ -69,6 +69,25 @@ module.exports = (config) =>
       },
     },
     reporters: ['progress', 'coverage'],
+    detectBrowsers: {
+      postDetection: function(availableBrowsers) {
+        const result = availableBrowsers;
+        if (process.env.TRAVIS) {
+          const chrome_index = availableBrowsers.indexOf('Chrome');
+          if (chrome_index >= 0) {
+            result.splice(chrome_index, 1);
+            result.push('Chrome_travis_ci');
+          }
+        }
+        return result;
+      },
+    },
+    customLaunchers: {
+      Chrome_travis_ci: {
+         base: 'Chrome',
+         flags: ['--no-sandbox'],
+       },
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
