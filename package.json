@@ -5,7 +5,7 @@
   "keywords": [],
   "main": "./lib/routable-component.js",
   "scripts": {
-    "test": "gulp test-cli"
+    "test": "gulp test"
   },
   "dependencies": {},
   "devDependencies": {
