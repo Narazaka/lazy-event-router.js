@@ -33,7 +33,7 @@ const dirs = {
 };
 
 const year = new Date().getFullYear();
-const license = `/* (C) ${year} Narazaka : Licensed under The MIT License - http://narazaka.net/license/MIT?${year} */\n`;
+const license = `/* (C) ${year} Narazaka : Licensed under The MIT License - https://narazaka.net/license/MIT?${year} */\n`;
 
 function notify_success(title, message = '<%= file.relative %>', onLast = false, sound = false) {
   return $.notify({ title: title, message: message, onLast: onLast, sound: false })
