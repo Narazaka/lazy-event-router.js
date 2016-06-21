@@ -1,6 +1,6 @@
 {
   "name": "routable-component",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Routable component",
   "keywords": [],
   "main": "./lib/routable-component.js",
