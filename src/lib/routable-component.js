@@ -1,20 +1,28 @@
 import {EventEmitter} from 'events';
 
+// shim
+require('core-js/fn/array/iterator');
+require('core-js/fn/symbol');
+
 /**
  * ルーティング可能なコンポーネント
  */
 export class RoutableComponent extends EventEmitter {
-  constructor() {
+  /**
+   * constructor
+   * @param {Object<EventEmitter>} components components
+   */
+  constructor(components = {}) {
     super();
-    this._models = {};
+    this._components = components;
     this._controllers = {};
   }
 
   /**
-   * Models
-   * @type {Hash<Object>}
+   * Components
+   * @type {Hash<EventEmitter>}
    */
-  get models() { return this._models; }
+  get components() { return this._components; }
 
   /**
    * Controllers
@@ -88,10 +96,15 @@ export class RoutableComponentRoutes {
   setup_to(component, controller_classes) {
     this._check_routes_requirements(component, controller_classes);
     for (const route of this._routes) {
-      component[route.from].on(route.event, (...args) => {
+      component.components[route.from].on(route.event, (...args) => {
         if (!component.controllers[route.controller]) { // なければコントローラを初期化
           component.controllers[route.controller] =
             new controller_classes[route.controller](component);
+        }
+        if (!component.controllers[route.controller][route.action]) {
+          throw new Error(
+            `controller [${route.controller}] does not have action [${route.action}]`
+          );
         }
         component.controllers[route.controller][route.action](...args);
       });
@@ -103,29 +116,29 @@ export class RoutableComponentRoutes {
       if (!(route.controller in controller_classes)) {
         throw new Error(`controller [${route.controller}] not found`);
       }
-      if (!(route.from in component)) {
+      if (!(route.from in component.components)) {
         throw new Error(`component from [${route.from}] not found`);
       }
     }
   }
 
-  // [Symbol.iterator]() {
-  //   return this._routes[Symbol.iterator]();
-  // }
+  [Symbol.iterator]() {
+    return this._routes[Symbol.iterator]();
+  }
 
   /**
    * イベントを定義する
    * @param {...string} args from, event, controller, action(前提としたものは省く)それぞれの名称文字列
    * @return {void}
    * @example
-   * router.event('shell', 'clicked', 'ShellController', 'shell_clicked') // full
-   * router.event('shell', 'clicked', 'ShellController') // event = action
+   * router.event('shell', 'clicked', 'ShellController', 'shell_clicked'); // full
+   * router.event('shell', 'clicked', 'ShellController'); // event = action
    * router.controller('ShellController', function(router) {
-   *   router.event('shell', 'clicked') // controllerは前提があるので省く
+   *   router.event('shell', 'clicked'); // controllerは前提があるので省く
    * });
    * router.from('shell', function(router) {
    *   router.controller('ShellController', function(router) {
-   *     router.event('clicked') // from, controllerは前提があるので省く
+   *     router.event('clicked'); // from, controllerは前提があるので省く
    *   });
    * });
    */
