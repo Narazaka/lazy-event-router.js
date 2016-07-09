@@ -54,29 +54,6 @@ class MyRoutingWithFromController {
   }
 }
 
-class MyUsefulRouting {
-  setup(routes) {
-    routes.event('MyEventSourceComponent', 'myevent', 'MyController', 'myaction');
-    routes.event('MyEventSourceComponent', 'noevent', 'MyController', 'noaction');
-  }
-}
-
-class MyEventSourceComponent extends EventEmitter {
-  constructor() {
-    super();
-  }
-}
-
-class MyController {
-  constructor(component) {
-    this.component = component;
-  }
-
-  myaction(...args) {
-    this.myaction_args = args;
-  }
-}
-
 /** @test {RoutableComponentRoutes} */
 describe('RoutableComponentRoutes', function() {
   /** @test {RoutableComponentRoutes#constructor} */
@@ -145,29 +122,6 @@ describe('RoutableComponentRoutes', function() {
       it('surely registered', function() {
         assert(this.subject.toString().match(/^with_from10.event1 => with_controller10#action1/));
         assert(this.subject.toString().match(/with_from20.event4 => with_controller30#action4\n$/));
-      });
-    });
-  });
-  /** @test {RoutableComponentRoutes#setup_to} */
-  context('include_route with', function() {
-    lazy('routes', function() { return new RoutableComponentRoutes(this.routing_classes) });
-    lazy('routing_classes', function() { return MyUsefulRouting });
-    lazy('component', function() { return new RoutableComponent(this.components) });
-    lazy('components', function() { return {MyEventSourceComponent: new MyEventSourceComponent()} });
-    lazy('controller_classes', function() { return {MyController} });
-    lazy('MyEventSourceComponent', function() { return this.component.components.MyEventSourceComponent });
-    context('single routing classes', function() {
-      subject(function () {});
-      it('surely included', function() {
-        this.routes.setup_to(this.component, this.controller_classes);
-        assert(this.component.controllers.MyController === undefined);
-        assert.throws(
-          () => this.MyEventSourceComponent.emit('noevent', "1", 2),
-          /controller \[MyController\] does not have action \[noaction\]/
-        );
-        this.MyEventSourceComponent.emit('myevent', "1", 2),
-        assert(this.component.controllers.MyController.component === this.component);
-        assert.deepEqual(this.component.controllers.MyController.myaction_args, ["1", 2]);
       });
     });
   });

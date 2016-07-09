@@ -10,13 +10,37 @@ require('core-js/fn/symbol');
 export class RoutableComponent extends EventEmitter {
   /**
    * constructor
-   * @param {Object<EventEmitter>} components components
+   * @param {RoutableComponentRoutes} routes ルーティング
+   * @param {Object<RoutableComponentController>} controller_classes コントローラクラスの連想配列
+   * @param {Object<EventEmitter>} [components] コンポーネントの連想配列
    */
-  constructor(components = {}) {
+  constructor(routes, controller_classes, components = {}) {
     super();
-    this._components = components;
+    this._routes = routes;
+    this._controller_classes = controller_classes;
     this._controllers = {};
+    this._components = {};
+    this._listeners = {};
+    this.register_components(components);
   }
+
+  /**
+   * Routes
+   * @type {RoutableComponentRoutes}
+   */
+  get routes() { return this._routes; }
+
+  /**
+   * Controllers
+   * @type {Hash<RoutableComponentController>}
+   */
+  get controllers() { return this._controllers; }
+
+  /**
+   * Controller classes
+   * @type {Hash<class<RoutableComponentController>>}
+   */
+  get controller_classes() { return this._controller_classes; }
 
   /**
    * Components
@@ -25,10 +49,73 @@ export class RoutableComponent extends EventEmitter {
   get components() { return this._components; }
 
   /**
-   * Controllers
-   * @type {Hash<RoutableComponentController>}
+   * コンポーネントを追加し、ルーティングによるイベントを設定する
+   *
+   * すでにコンポーネントがあった場合は一度削除してから改めて追加する
+   * @param {Object<RoutableComponent>} components コンポーネントのリスト
+   * @return {void}
    */
-  get controllers() { return this._controllers; }
+  register_components(components) {
+    for (const name of Object.keys(components)) {
+      const component = components[name];
+      this.register_component(name, component);
+    }
+  }
+
+  /**
+   * コンポーネントを追加し、ルーティングによるイベントを設定する
+   *
+   * すでにコンポーネントがあった場合は一度削除してから改めて追加する
+   * @param {string} name コンポーネント名
+   * @param {RoutableComponent} component コンポーネント
+   * @return {void}
+   */
+  register_component(name, component) {
+    if (this.components[name]) this.unregister_component(name);
+    this.components[name] = component;
+    for (const route of this.routes) {
+      if (route.from === name) this._attach_route_event(route);
+    }
+  }
+
+  /**
+   * コンポーネントを削除し、ルーティングによるイベントを破棄する
+   * @param {string} name コンポーネント名
+   * @return {void}
+   */
+  unregister_component(name) {
+    if (this.components[name] && this._listeners[name]) {
+      const listeners = this._listeners[name];
+      for (const event of Object.keys(listeners)) {
+        for (const listener of listeners[event]) {
+          this.components[name].removeListener(event, listener);
+        }
+      }
+    }
+    delete this.components[name];
+  }
+
+  _attach_route_event(route) {
+    const listener = (...args) => {
+      if (!this.controllers[route.controller]) {
+        if (!(route.controller in this.controller_classes)) {
+          throw new Error(`controller [${route.controller}] not found`);
+        }
+        this.controllers[route.controller] =
+          new this.controller_classes[route.controller](this);
+      }
+      if (!this.controllers[route.controller][route.action]) {
+        throw new Error(
+          `controller [${route.controller}] does not have action [${route.action}]`
+        );
+      }
+      this.controllers[route.controller][route.action](...args);
+    };
+    this.components[route.from].on(route.event, listener);
+    if (!this._listeners[route.from]) this._listeners[route.from] = {};
+    if (!this._listeners[route.from][route.event]) this._listeners[route.from][route.event] = [];
+    this._listeners[route.from][route.event].push(listener);
+  }
 }
 
 /**
@@ -84,41 +171,6 @@ export class RoutableComponentRoutes {
     for (const route_class of _routing_classes) {
       const route = new route_class();
       route.setup(this);
-    }
-  }
-
-  /**
-   * コンポーネントのもつイベント発火要素のイベントにルーティングを設定する
-   * @param {RoutableComponent} component コンポーネント
-   * @param {Hash<RoutableComponentController>} controller_classes コントローラクラスの連想配列
-   * @return {void}
-   */
-  setup_to(component, controller_classes) {
-    this._check_routes_requirements(component, controller_classes);
-    for (const route of this._routes) {
-      component.components[route.from].on(route.event, (...args) => {
-        if (!component.controllers[route.controller]) { // なければコントローラを初期化
-          component.controllers[route.controller] =
-            new controller_classes[route.controller](component);
-        }
-        if (!component.controllers[route.controller][route.action]) {
-          throw new Error(
-            `controller [${route.controller}] does not have action [${route.action}]`
-          );
-        }
-        component.controllers[route.controller][route.action](...args);
-      });
-    }
-  }
-
-  _check_routes_requirements(component, controller_classes) {
-    for (const route of this._routes) {
-      if (!(route.controller in controller_classes)) {
-        throw new Error(`controller [${route.controller}] not found`);
-      }
-      if (!(route.from in component.components)) {
-        throw new Error(`component from [${route.from}] not found`);
-      }
     }
   }
 
