@@ -1,9 +1,5 @@
 import {EventEmitter} from 'events';
 
-// shim
-require('core-js/fn/array/iterator');
-require('core-js/fn/symbol');
-
 /**
  * ルーティング可能なコンポーネント
  */
