@@ -42,14 +42,14 @@ describe('RoutableComponent', function() {
   /** @test {RoutableComponent#constructor} */
   context('constructed with', function() {
     context('no components', function() {
-      subject(function() { return new RoutableComponent(this.routes, this.controller_classes) });
+      subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
       it('surely initialized', function() {
         assert.doesNotThrow(() => this.subject);
         assert(this.subject instanceof RoutableComponent);
       });
     });
     context('components', function() {
-      subject(function() { return new RoutableComponent(this.routes, this.controller_classes, this.components) });
+      subject(function() { return new RoutableComponent(this.components, this.routes, this.controller_classes) });
       it('surely initialized', function() {
         assert.doesNotThrow(() => this.subject);
         assert(this.subject instanceof RoutableComponent);
@@ -70,7 +70,7 @@ describe('RoutableComponent', function() {
 
   /** @test {RoutableComponent#register_component} */
   context('register_component', function() {
-    subject(function() { return new RoutableComponent(this.routes, this.controller_classes) });
+    subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
 
     it('surely registered', function() {
       this.subject.register_component('MyEventSourceComponent', new MyEventSourceComponent());
@@ -98,7 +98,7 @@ describe('RoutableComponent', function() {
 
   /** @test {RoutableComponent#unregister_component} */
   context('unregister_component', function() {
-    subject(function() { return new RoutableComponent(this.routes, this.controller_classes) });
+    subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
 
     it('surely unregistered', function() {
       const component = new MyEventSourceComponent();
@@ -113,7 +113,7 @@ describe('RoutableComponent', function() {
 
   /** @test {RoutableComponent#register_components} */
   context('register_components', function() {
-    subject(function() { return new RoutableComponent(this.routes, this.controller_classes) });
+    subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
 
     it('surely registered', function() {
       this.subject.register_components(this.components);
@@ -125,7 +125,7 @@ describe('RoutableComponent', function() {
   context('register_component events', function() {
 
     context('controller exists', function() {
-      subject(function() { return new RoutableComponent(this.routes, this.controller_classes, this.components) });
+      subject(function() { return new RoutableComponent(this.components, this.routes, this.controller_classes) });
 
       it('event works', function() {
         assert(this.subject.controllers.MyController === undefined);
@@ -143,7 +143,7 @@ describe('RoutableComponent', function() {
     });
 
     context('controller not exists', function() {
-      subject(function() { return new RoutableComponent(this.routes, {}, this.components) });
+      subject(function() { return new RoutableComponent(this.components, this.routes, {}) });
       it('no controller error works', function() {
         assert.throws(
           () => this.MyEventSourceComponent.emit('noevent', "1", 2),

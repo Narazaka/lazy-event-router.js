@@ -1,4 +1,4 @@
-import {RoutableComponent, RoutableComponentRoutes} from '../src/lib/routable-component';
+import {RoutableComponentRoutes} from '../src/lib/routable-component';
 import {EventEmitter} from 'events';
 
 import assert from 'power-assert';

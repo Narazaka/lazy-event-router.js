@@ -10,11 +10,11 @@ require('core-js/fn/symbol');
 export class RoutableComponent extends EventEmitter {
   /**
    * constructor
+   * @param {Object<EventEmitter>} [components] コンポーネントの連想配列
    * @param {RoutableComponentRoutes} routes ルーティング
    * @param {Object<RoutableComponentController>} controller_classes コントローラクラスの連想配列
-   * @param {Object<EventEmitter>} [components] コンポーネントの連想配列
    */
-  constructor(routes, controller_classes, components = {}) {
+  constructor(components, routes, controller_classes) {
     super();
     this._routes = routes;
     this._controller_classes = controller_classes;
