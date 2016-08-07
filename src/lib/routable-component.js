@@ -89,7 +89,7 @@ export class RoutableComponent extends EventEmitter {
       }
     }
     delete this.components[name];
-    this._listeners[name];
+    delete this._listeners[name];
   }
 
   _attach_route_event(route) {
