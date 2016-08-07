@@ -24,7 +24,7 @@ class MyController {
   }
 
   myaction(...args) {
-    this.myaction_args = args;
+    this.myactionArgs = args;
   }
 
   plus() {
@@ -34,22 +34,22 @@ class MyController {
 
 /** @test {RoutableComponent} */
 describe('RoutableComponent', function() {
-  lazy('routes', function() { return new RoutableComponentRoutes(this.routing_classes) });
-  lazy('routing_classes', function() { return MyUsefulRouting });
+  lazy('routes', function() { return new RoutableComponentRoutes(this.routingClasses) });
+  lazy('routingClasses', function() { return MyUsefulRouting });
   lazy('components', function() { return {MyEventSourceComponent: new MyEventSourceComponent()} });
-  lazy('controller_classes', function() { return {MyController} });
+  lazy('controllerClasses', function() { return {MyController} });
   lazy('MyEventSourceComponent', function() { return this.subject.components.MyEventSourceComponent });
   /** @test {RoutableComponent#constructor} */
   context('constructed with', function() {
     context('no components', function() {
-      subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
+      subject(function() { return new RoutableComponent({}, this.routes, this.controllerClasses) });
       it('surely initialized', function() {
         assert.doesNotThrow(() => this.subject);
         assert(this.subject instanceof RoutableComponent);
       });
     });
     context('components', function() {
-      subject(function() { return new RoutableComponent(this.components, this.routes, this.controller_classes) });
+      subject(function() { return new RoutableComponent(this.components, this.routes, this.controllerClasses) });
       it('surely initialized', function() {
         assert.doesNotThrow(() => this.subject);
         assert(this.subject instanceof RoutableComponent);
@@ -63,25 +63,25 @@ describe('RoutableComponent', function() {
         );
         this.MyEventSourceComponent.emit('myevent', "1", 2),
         assert(this.subject.controllers.MyController.component === this.subject);
-        assert.deepEqual(this.subject.controllers.MyController.myaction_args, ["1", 2]);
+        assert.deepEqual(this.subject.controllers.MyController.myactionArgs, ["1", 2]);
       });
     });
   });
 
-  /** @test {RoutableComponent#register_component} */
-  context('register_component', function() {
-    subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
+  /** @test {RoutableComponent#registerComponent} */
+  context('registerComponent', function() {
+    subject(function() { return new RoutableComponent({}, this.routes, this.controllerClasses) });
 
     it('surely registered', function() {
-      this.subject.register_component('MyEventSourceComponent', new MyEventSourceComponent());
+      this.subject.registerComponent('MyEventSourceComponent', new MyEventSourceComponent());
       assert(this.MyEventSourceComponent instanceof MyEventSourceComponent);
       this.MyEventSourceComponent.emit('myevent', "1", 2),
       assert(this.subject.controllers.MyController.component === this.subject);
-      assert.deepEqual(this.subject.controllers.MyController.myaction_args, ["1", 2]);
+      assert.deepEqual(this.subject.controllers.MyController.myactionArgs, ["1", 2]);
     });
 
     it('surely registered with another name', function() {
-      this.subject.register_component('AnotherNameComponent', new MyEventSourceComponent());
+      this.subject.registerComponent('AnotherNameComponent', new MyEventSourceComponent());
       assert(this.subject.components.AnotherNameComponent instanceof MyEventSourceComponent);
       this.subject.components.AnotherNameComponent.emit('myevent', "1", 2),
       assert(this.subject.controllers.MyController === undefined);
@@ -89,49 +89,49 @@ describe('RoutableComponent', function() {
 
     it('registers only one component event', function() {
       const component = new MyEventSourceComponent();
-      this.subject.register_component('MyEventSourceComponent', component);
-      this.subject.register_component('MyEventSourceComponent', component);
+      this.subject.registerComponent('MyEventSourceComponent', component);
+      this.subject.registerComponent('MyEventSourceComponent', component);
       this.MyEventSourceComponent.emit('plus');
       assert(this.subject.controllers.MyController.count === 1);
     });
   });
 
-  /** @test {RoutableComponent#unregister_component} */
-  context('unregister_component', function() {
-    subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
+  /** @test {RoutableComponent#unregisterComponent} */
+  context('unregisterComponent', function() {
+    subject(function() { return new RoutableComponent({}, this.routes, this.controllerClasses) });
 
     it('surely unregistered', function() {
       const component = new MyEventSourceComponent();
-      this.subject.register_component('MyEventSourceComponent', component);
+      this.subject.registerComponent('MyEventSourceComponent', component);
       this.MyEventSourceComponent.emit('plus');
-      this.subject.unregister_component('MyEventSourceComponent');
+      this.subject.unregisterComponent('MyEventSourceComponent');
       this.MyEventSourceComponent.emit('plus');
       assert(this.subject.components.MyEventSourceComponent === undefined);
       assert(this.subject.controllers.MyController.count === 1);
     });
   });
 
-  /** @test {RoutableComponent#register_components} */
-  context('register_components', function() {
-    subject(function() { return new RoutableComponent({}, this.routes, this.controller_classes) });
+  /** @test {RoutableComponent#registerComponents} */
+  context('registerComponents', function() {
+    subject(function() { return new RoutableComponent({}, this.routes, this.controllerClasses) });
 
     it('surely registered', function() {
-      this.subject.register_components(this.components);
+      this.subject.registerComponents(this.components);
       assert(this.MyEventSourceComponent instanceof MyEventSourceComponent);
     });
   });
 
-  /** @test {RoutableComponent#register_component} */
-  context('register_component events', function() {
+  /** @test {RoutableComponent#registerComponent} */
+  context('registerComponent events', function() {
 
     context('controller exists', function() {
-      subject(function() { return new RoutableComponent(this.components, this.routes, this.controller_classes) });
+      subject(function() { return new RoutableComponent(this.components, this.routes, this.controllerClasses) });
 
       it('event works', function() {
         assert(this.subject.controllers.MyController === undefined);
         this.MyEventSourceComponent.emit('myevent', "1", 2),
         assert(this.subject.controllers.MyController.component === this.subject);
-        assert.deepEqual(this.subject.controllers.MyController.myaction_args, ["1", 2]);
+        assert.deepEqual(this.subject.controllers.MyController.myactionArgs, ["1", 2]);
       });
 
       it('no action error works', function() {
