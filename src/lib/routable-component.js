@@ -8,16 +8,16 @@ export class RoutableComponent extends EventEmitter {
    * constructor
    * @param {Object<EventEmitter>} [components] コンポーネントの連想配列
    * @param {RoutableComponentRoutes} routes ルーティング
-   * @param {Object<RoutableComponentController>} controller_classes コントローラクラスの連想配列
+   * @param {Object<RoutableComponentController>} controllerClasses コントローラクラスの連想配列
    */
-  constructor(components, routes, controller_classes) {
+  constructor(components, routes, controllerClasses) {
     super();
     this._routes = routes;
-    this._controller_classes = controller_classes;
+    this._controllerClasses = controllerClasses;
     this._controllers = {};
     this._components = {};
     this._listeners = {};
-    this.register_components(components);
+    this.registerComponents(components);
   }
 
   /**
@@ -36,7 +36,7 @@ export class RoutableComponent extends EventEmitter {
    * Controller classes
    * @type {Hash<class<RoutableComponentController>>}
    */
-  get controller_classes() { return this._controller_classes; }
+  get controllerClasses() { return this._controllerClasses; }
 
   /**
    * Components
@@ -51,10 +51,10 @@ export class RoutableComponent extends EventEmitter {
    * @param {Object<RoutableComponent>} components コンポーネントのリスト
    * @return {void}
    */
-  register_components(components) {
+  registerComponents(components) {
     for (const name of Object.keys(components)) {
       const component = components[name];
-      this.register_component(name, component);
+      this.registerComponent(name, component);
     }
   }
 
@@ -66,11 +66,11 @@ export class RoutableComponent extends EventEmitter {
    * @param {RoutableComponent} component コンポーネント
    * @return {void}
    */
-  register_component(name, component) {
-    if (this.components[name]) this.unregister_component(name);
+  registerComponent(name, component) {
+    if (this.components[name]) this.unregisterComponent(name);
     this.components[name] = component;
     for (const route of this.routes) {
-      if (route.from === name) this._attach_route_event(route);
+      if (route.from === name) this._attachRouteEvent(route);
     }
   }
 
@@ -79,7 +79,7 @@ export class RoutableComponent extends EventEmitter {
    * @param {string} name コンポーネント名
    * @return {void}
    */
-  unregister_component(name) {
+  unregisterComponent(name) {
     if (this.components[name] && this._listeners[name]) {
       const listeners = this._listeners[name];
       for (const event of Object.keys(listeners)) {
@@ -92,14 +92,14 @@ export class RoutableComponent extends EventEmitter {
     delete this._listeners[name];
   }
 
-  _attach_route_event(route) {
+  _attachRouteEvent(route) {
     const listener = (...args) => {
       if (!this.controllers[route.controller]) {
-        if (!(route.controller in this.controller_classes)) {
+        if (!(route.controller in this.controllerClasses)) {
           throw new Error(`controller [${route.controller}] not found`);
         }
         this.controllers[route.controller] =
-          new this.controller_classes[route.controller](this);
+          new this.controllerClasses[route.controller](this);
       }
       if (!this.controllers[route.controller][route.action]) {
         throw new Error(
@@ -151,22 +151,22 @@ export class RoutableComponentController {
 export class RoutableComponentRoutes {
   /**
    * コンストラクタ
-   * @param {RoutableComponentRouting|RoutableComponentRouting[]} routing_classes ルート定義クラス(の配列)
+   * @param {RoutableComponentRouting|RoutableComponentRouting[]} routingClasses ルート定義クラス(の配列)
    */
-  constructor(routing_classes = []) {
+  constructor(routingClasses = []) {
     this._routes = [];
-    this.include_route(routing_classes);
+    this.includeRoute(routingClasses);
   }
 
   /**
    * ルートを設定する
-   * @param {Route|Route[]} routing_classes ルート定義クラス(の配列)
+   * @param {Route|Route[]} routingClasses ルート定義クラス(の配列)
    * @return {void}
    */
-  include_route(routing_classes) {
-    const _routing_classes = routing_classes instanceof Array ? routing_classes : [routing_classes];
-    for (const route_class of _routing_classes) {
-      const route = new route_class();
+  includeRoute(routingClasses) {
+    const _routingClasses = routingClasses instanceof Array ? routingClasses : [routingClasses];
+    for (const routeClass of _routingClasses) {
+      const route = new routeClass();
       route.setup(this);
     }
   }
@@ -192,17 +192,17 @@ export class RoutableComponentRoutes {
    * });
    */
   event(...args) {
-    if (this._current_from && this._current_controller) {
+    if (this._currentFrom && this._currentController) {
       if (args.length > 2) throw new Error('arguments too long');
-      this.event_on_from_controller(...args);
-    } else if (this._current_from) {
+      this.eventOnFromController(...args);
+    } else if (this._currentFrom) {
       if (args.length > 3) throw new Error('arguments too long');
-      this.event_on_from(...args);
-    } else if (this._current_controller) {
+      this.eventOnFrom(...args);
+    } else if (this._currentController) {
       if (args.length > 3) throw new Error('arguments too long');
-      this.event_on_controller(...args);
+      this.eventOnController(...args);
     } else {
-      this.event_on_none(...args);
+      this.eventOnNone(...args);
     }
   }
 
@@ -212,10 +212,10 @@ export class RoutableComponentRoutes {
    * @param {string} [action] アクション
    * @return {void}
    */
-  event_on_from_controller(event, action = event) {
-    const from = this._current_from;
-    const controller = this._current_controller;
-    this.add_route(from, event, controller, action);
+  eventOnFromController(event, action = event) {
+    const from = this._currentFrom;
+    const controller = this._currentController;
+    this.addRoute(from, event, controller, action);
   }
 
   /**
@@ -225,9 +225,9 @@ export class RoutableComponentRoutes {
    * @param {string} [action] アクション
    * @return {void}
    */
-  event_on_from(event, controller, action = event) {
-    const from = this._current_from;
-    this.add_route(from, event, controller, action);
+  eventOnFrom(event, controller, action = event) {
+    const from = this._currentFrom;
+    this.addRoute(from, event, controller, action);
   }
 
   /**
@@ -237,9 +237,9 @@ export class RoutableComponentRoutes {
    * @param {string} [action] アクション
    * @return {void}
    */
-  event_on_controller(from, event, action = event) {
-    const controller = this._current_controller;
-    this.add_route(from, event, controller, action);
+  eventOnController(from, event, action = event) {
+    const controller = this._currentController;
+    this.addRoute(from, event, controller, action);
   }
 
   /**
@@ -250,8 +250,8 @@ export class RoutableComponentRoutes {
    * @param {string} [action] アクション
    * @return {void}
    */
-  event_on_none(from, event, controller, action = event) {
-    this.add_route(from, event, controller, action);
+  eventOnNone(from, event, controller, action = event) {
+    this.addRoute(from, event, controller, action);
   }
 
   /**
@@ -261,9 +261,9 @@ export class RoutableComponentRoutes {
    * @return {void}
    */
   from(from, block) {
-    this._current_from = from;
+    this._currentFrom = from;
     block(this);
-    delete this._current_from;
+    delete this._currentFrom;
   }
 
   /**
@@ -273,9 +273,9 @@ export class RoutableComponentRoutes {
    * @return {void}
    */
   controller(controller, block) {
-    this._current_controller = controller;
+    this._currentController = controller;
     block(this);
-    delete this._current_controller;
+    delete this._currentController;
   }
 
   /**
@@ -286,7 +286,7 @@ export class RoutableComponentRoutes {
    * @param {string} action アクション
    * @return {void}
    */
-  add_route(from, event, controller, action) {
+  addRoute(from, event, controller, action) {
     this._routes.push(new RoutableComponentRoute(from, event, controller, action));
   }
 
@@ -317,14 +317,14 @@ export class RoutableComponentRoute {
    * @param {string} action アクション
    */
   constructor(from, event, controller, action) {
-    this._check_constructor_arguments(from, event, controller, action);
+    this._checkConstructorArguments(from, event, controller, action);
     this._from = from;
     this._event = event;
     this._controller = controller;
     this._action = action;
   }
 
-  _check_constructor_arguments(from, event, controller, action) {
+  _checkConstructorArguments(from, event, controller, action) {
     const isString = (obj) => typeof obj === 'string' || obj instanceof String;
     if (from == null) throw new Error('register routing error: from is empty!');
     if (event == null) throw new Error('register routing error: event is empty!');

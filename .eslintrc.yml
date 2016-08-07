@@ -88,7 +88,7 @@ rules:
   no-const-assign: 2
   no-bitwise: 0
   dot-notation: 0
-  camelcase: 0
+  camelcase: 2
   prefer-const: 2
   no-negated-in-lhs: 2
   prefer-arrow-callback: 1

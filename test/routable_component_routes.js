@@ -26,7 +26,7 @@ class MyRoutingWithFrom {
 class MyRoutingWithController {
   setup(routes) {
     routes.controller('with_controller1', (routes) => {
-      routes.event('from1' ,'event1', 'action1');
+      routes.event('from1', 'event1', 'action1');
       routes.event('from2', 'event2', 'action2');
     });
     routes.controller('with_controller2', (routes) => {
@@ -63,31 +63,31 @@ describe('RoutableComponentRoutes', function() {
   });
   /** @test {RoutableComponentRoutes#constructor} */
   context('constructed with', function() {
-    subject(function() { return new RoutableComponentRoutes(this.routing_classes) });
+    subject(function() { return new RoutableComponentRoutes(this.routingClasses) });
     context('single routing classes', function() {
-      lazy('routing_classes', function() { return MyRouting });
+      lazy('routingClasses', function() { return MyRouting });
       it('surely initialized', function() { assert(this.subject instanceof RoutableComponentRoutes) });
     });
     context('multiple routing classes', function() {
-      lazy('routing_classes', function() { return [MyRouting, MyRoutingWithFrom] });
+      lazy('routingClasses', function() { return [MyRouting, MyRoutingWithFrom] });
       it('surely initialized', function() { assert(this.subject instanceof RoutableComponentRoutes) });
     });
   });
-  /** @test {RoutableComponentRoutes#include_route} */
-  context('include_route with', function() {
+  /** @test {RoutableComponentRoutes#includeRoute} */
+  context('includeRoute with', function() {
     subject(function() {
       const routes = new RoutableComponentRoutes();
-      routes.include_route(this.routing_classes);
+      routes.includeRoute(this.routingClasses);
       return routes;
     });
     context('single routing classes', function() {
-      lazy('routing_classes', function() { return MyRouting });
+      lazy('routingClasses', function() { return MyRouting });
       it('surely included', function() {
         assert(this.subject.toString().match(/^from1.event1 => controller1#action1/));
       });
     });
     context('multiple routing classes', function() {
-      lazy('routing_classes', function() { return [MyRouting, MyRoutingWithFrom] });
+      lazy('routingClasses', function() { return [MyRouting, MyRoutingWithFrom] });
       it('surely included', function() {
         assert(this.subject.toString().match(/^from1.event1 => controller1#action1/));
         assert(this.subject.toString().match(/with_from2.event3 => controller3#action3\n$/));
@@ -96,29 +96,29 @@ describe('RoutableComponentRoutes', function() {
   });
   /** @test {RoutableComponentRoutes#event} */
   context('event register with', function() {
-    subject(function() { return new RoutableComponentRoutes(this.routing_classes) });
+    subject(function() { return new RoutableComponentRoutes(this.routingClasses) });
     context('simple event()', function() {
-      lazy('routing_classes', function() { return MyRouting });
+      lazy('routingClasses', function() { return MyRouting });
       it('surely registered', function() {
         assert(this.subject.toString().match(/^from1.event1 => controller1#action1/));
       });
     });
     context('from()', function() {
-      lazy('routing_classes', function() { return MyRoutingWithFrom });
+      lazy('routingClasses', function() { return MyRoutingWithFrom });
       it('surely registered', function() {
         assert(this.subject.toString().match(/^with_from1.event1 => controller1#action1/));
         assert(this.subject.toString().match(/with_from2.event3 => controller3#action3\n$/));
       });
     });
     context('controller()', function() {
-      lazy('routing_classes', function() { return MyRoutingWithController });
+      lazy('routingClasses', function() { return MyRoutingWithController });
       it('surely registered', function() {
         assert(this.subject.toString().match(/^from1.event1 => with_controller1#action1/));
         assert(this.subject.toString().match(/from3.event3 => with_controller2#action3\n$/));
       });
     });
     context('from() and controller()', function() {
-      lazy('routing_classes', function() { return MyRoutingWithFromController });
+      lazy('routingClasses', function() { return MyRoutingWithFromController });
       it('surely registered', function() {
         assert(this.subject.toString().match(/^with_from10.event1 => with_controller10#action1/));
         assert(this.subject.toString().match(/with_from20.event4 => with_controller30#action4\n$/));

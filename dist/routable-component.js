@@ -100,20 +100,20 @@ var routableComponent =
 	   * constructor
 	   * @param {Object<EventEmitter>} [components] コンポーネントの連想配列
 	   * @param {RoutableComponentRoutes} routes ルーティング
-	   * @param {Object<RoutableComponentController>} controller_classes コントローラクラスの連想配列
+	   * @param {Object<RoutableComponentController>} controllerClasses コントローラクラスの連想配列
 	   */
 	
-	  function RoutableComponent(components, routes, controller_classes) {
+	  function RoutableComponent(components, routes, controllerClasses) {
 	    (0, _classCallCheck3.default)(this, RoutableComponent);
 	
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(RoutableComponent).call(this));
 	
 	    _this._routes = routes;
-	    _this._controller_classes = controller_classes;
+	    _this._controllerClasses = controllerClasses;
 	    _this._controllers = {};
 	    _this._components = {};
 	    _this._listeners = {};
-	    _this.register_components(components);
+	    _this.registerComponents(components);
 	    return _this;
 	  }
 	
@@ -124,7 +124,7 @@ var routableComponent =
 	
 	
 	  (0, _createClass3.default)(RoutableComponent, [{
-	    key: 'register_components',
+	    key: 'registerComponents',
 	
 	
 	    /**
@@ -134,7 +134,7 @@ var routableComponent =
 	     * @param {Object<RoutableComponent>} components コンポーネントのリスト
 	     * @return {void}
 	     */
-	    value: function register_components(components) {
+	    value: function registerComponents(components) {
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
@@ -144,7 +144,7 @@ var routableComponent =
 	          var name = _step.value;
 	
 	          var component = components[name];
-	          this.register_component(name, component);
+	          this.registerComponent(name, component);
 	        }
 	      } catch (err) {
 	        _didIteratorError = true;
@@ -172,9 +172,9 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'register_component',
-	    value: function register_component(name, component) {
-	      if (this.components[name]) this.unregister_component(name);
+	    key: 'registerComponent',
+	    value: function registerComponent(name, component) {
+	      if (this.components[name]) this.unregisterComponent(name);
 	      this.components[name] = component;
 	      var _iteratorNormalCompletion2 = true;
 	      var _didIteratorError2 = false;
@@ -184,7 +184,7 @@ var routableComponent =
 	        for (var _iterator2 = (0, _getIterator3.default)(this.routes), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	          var route = _step2.value;
 	
-	          if (route.from === name) this._attach_route_event(route);
+	          if (route.from === name) this._attachRouteEvent(route);
 	        }
 	      } catch (err) {
 	        _didIteratorError2 = true;
@@ -209,8 +209,8 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'unregister_component',
-	    value: function unregister_component(name) {
+	    key: 'unregisterComponent',
+	    value: function unregisterComponent(name) {
 	      if (this.components[name] && this._listeners[name]) {
 	        var listeners = this._listeners[name];
 	        var _iteratorNormalCompletion3 = true;
@@ -261,21 +261,21 @@ var routableComponent =
 	        }
 	      }
 	      delete this.components[name];
-	      this._listeners[name];
+	      delete this._listeners[name];
 	    }
 	  }, {
-	    key: '_attach_route_event',
-	    value: function _attach_route_event(route) {
+	    key: '_attachRouteEvent',
+	    value: function _attachRouteEvent(route) {
 	      var _this2 = this;
 	
 	      var listener = function listener() {
 	        var _controllers$route$co;
 	
 	        if (!_this2.controllers[route.controller]) {
-	          if (!(route.controller in _this2.controller_classes)) {
+	          if (!(route.controller in _this2.controllerClasses)) {
 	            throw new Error('controller [' + route.controller + '] not found');
 	          }
-	          _this2.controllers[route.controller] = new _this2.controller_classes[route.controller](_this2);
+	          _this2.controllers[route.controller] = new _this2.controllerClasses[route.controller](_this2);
 	        }
 	        if (!_this2.controllers[route.controller][route.action]) {
 	          throw new Error('controller [' + route.controller + '] does not have action [' + route.action + ']');
@@ -310,9 +310,9 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'controller_classes',
+	    key: 'controllerClasses',
 	    get: function get() {
-	      return this._controller_classes;
+	      return this._controllerClasses;
 	    }
 	
 	    /**
@@ -381,37 +381,37 @@ var routableComponent =
 	var RoutableComponentRoutes = function () {
 	  /**
 	   * コンストラクタ
-	   * @param {RoutableComponentRouting|RoutableComponentRouting[]} routing_classes ルート定義クラス(の配列)
+	   * @param {RoutableComponentRouting|RoutableComponentRouting[]} routingClasses ルート定義クラス(の配列)
 	   */
 	
 	  function RoutableComponentRoutes() {
-	    var routing_classes = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	    var routingClasses = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	    (0, _classCallCheck3.default)(this, RoutableComponentRoutes);
 	
 	    this._routes = [];
-	    this.include_route(routing_classes);
+	    this.includeRoute(routingClasses);
 	  }
 	
 	  /**
 	   * ルートを設定する
-	   * @param {Route|Route[]} routing_classes ルート定義クラス(の配列)
+	   * @param {Route|Route[]} routingClasses ルート定義クラス(の配列)
 	   * @return {void}
 	   */
 	
 	
 	  (0, _createClass3.default)(RoutableComponentRoutes, [{
-	    key: 'include_route',
-	    value: function include_route(routing_classes) {
-	      var _routing_classes = routing_classes instanceof Array ? routing_classes : [routing_classes];
+	    key: 'includeRoute',
+	    value: function includeRoute(routingClasses) {
+	      var _routingClasses = routingClasses instanceof Array ? routingClasses : [routingClasses];
 	      var _iteratorNormalCompletion5 = true;
 	      var _didIteratorError5 = false;
 	      var _iteratorError5 = undefined;
 	
 	      try {
-	        for (var _iterator5 = (0, _getIterator3.default)(_routing_classes), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	          var route_class = _step5.value;
+	        for (var _iterator5 = (0, _getIterator3.default)(_routingClasses), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	          var routeClass = _step5.value;
 	
-	          var route = new route_class();
+	          var route = new routeClass();
 	          route.setup(this);
 	        }
 	      } catch (err) {
@@ -455,17 +455,17 @@ var routableComponent =
 	  }, {
 	    key: 'event',
 	    value: function event() {
-	      if (this._current_from && this._current_controller) {
+	      if (this._currentFrom && this._currentController) {
 	        if (arguments.length > 2) throw new Error('arguments too long');
-	        this.event_on_from_controller.apply(this, arguments);
-	      } else if (this._current_from) {
+	        this.eventOnFromController.apply(this, arguments);
+	      } else if (this._currentFrom) {
 	        if (arguments.length > 3) throw new Error('arguments too long');
-	        this.event_on_from.apply(this, arguments);
-	      } else if (this._current_controller) {
+	        this.eventOnFrom.apply(this, arguments);
+	      } else if (this._currentController) {
 	        if (arguments.length > 3) throw new Error('arguments too long');
-	        this.event_on_controller.apply(this, arguments);
+	        this.eventOnController.apply(this, arguments);
 	      } else {
-	        this.event_on_none.apply(this, arguments);
+	        this.eventOnNone.apply(this, arguments);
 	      }
 	    }
 	
@@ -477,13 +477,13 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'event_on_from_controller',
-	    value: function event_on_from_controller(event) {
+	    key: 'eventOnFromController',
+	    value: function eventOnFromController(event) {
 	      var action = arguments.length <= 1 || arguments[1] === undefined ? event : arguments[1];
 	
-	      var from = this._current_from;
-	      var controller = this._current_controller;
-	      this.add_route(from, event, controller, action);
+	      var from = this._currentFrom;
+	      var controller = this._currentController;
+	      this.addRoute(from, event, controller, action);
 	    }
 	
 	    /**
@@ -495,12 +495,12 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'event_on_from',
-	    value: function event_on_from(event, controller) {
+	    key: 'eventOnFrom',
+	    value: function eventOnFrom(event, controller) {
 	      var action = arguments.length <= 2 || arguments[2] === undefined ? event : arguments[2];
 	
-	      var from = this._current_from;
-	      this.add_route(from, event, controller, action);
+	      var from = this._currentFrom;
+	      this.addRoute(from, event, controller, action);
 	    }
 	
 	    /**
@@ -512,12 +512,12 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'event_on_controller',
-	    value: function event_on_controller(from, event) {
+	    key: 'eventOnController',
+	    value: function eventOnController(from, event) {
 	      var action = arguments.length <= 2 || arguments[2] === undefined ? event : arguments[2];
 	
-	      var controller = this._current_controller;
-	      this.add_route(from, event, controller, action);
+	      var controller = this._currentController;
+	      this.addRoute(from, event, controller, action);
 	    }
 	
 	    /**
@@ -530,11 +530,11 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'event_on_none',
-	    value: function event_on_none(from, event, controller) {
+	    key: 'eventOnNone',
+	    value: function eventOnNone(from, event, controller) {
 	      var action = arguments.length <= 3 || arguments[3] === undefined ? event : arguments[3];
 	
-	      this.add_route(from, event, controller, action);
+	      this.addRoute(from, event, controller, action);
 	    }
 	
 	    /**
@@ -547,9 +547,9 @@ var routableComponent =
 	  }, {
 	    key: 'from',
 	    value: function from(_from, block) {
-	      this._current_from = _from;
+	      this._currentFrom = _from;
 	      block(this);
-	      delete this._current_from;
+	      delete this._currentFrom;
 	    }
 	
 	    /**
@@ -562,9 +562,9 @@ var routableComponent =
 	  }, {
 	    key: 'controller',
 	    value: function controller(_controller, block) {
-	      this._current_controller = _controller;
+	      this._currentController = _controller;
 	      block(this);
-	      delete this._current_controller;
+	      delete this._currentController;
 	    }
 	
 	    /**
@@ -577,8 +577,8 @@ var routableComponent =
 	     */
 	
 	  }, {
-	    key: 'add_route',
-	    value: function add_route(from, event, controller, action) {
+	    key: 'addRoute',
+	    value: function addRoute(from, event, controller, action) {
 	      this._routes.push(new RoutableComponentRoute(from, event, controller, action));
 	    }
 	
@@ -619,7 +619,7 @@ var routableComponent =
 	  function RoutableComponentRoute(from, event, controller, action) {
 	    (0, _classCallCheck3.default)(this, RoutableComponentRoute);
 	
-	    this._check_constructor_arguments(from, event, controller, action);
+	    this._checkConstructorArguments(from, event, controller, action);
 	    this._from = from;
 	    this._event = event;
 	    this._controller = controller;
@@ -627,8 +627,8 @@ var routableComponent =
 	  }
 	
 	  (0, _createClass3.default)(RoutableComponentRoute, [{
-	    key: '_check_constructor_arguments',
-	    value: function _check_constructor_arguments(from, event, controller, action) {
+	    key: '_checkConstructorArguments',
+	    value: function _checkConstructorArguments(from, event, controller, action) {
 	      var isString = function isString(obj) {
 	        return typeof obj === 'string' || obj instanceof String;
 	      };
