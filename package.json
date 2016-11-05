@@ -5,6 +5,10 @@
   "keywords": [],
   "main": "./dist/lib/routable-component.js",
   "types": "./dist/lib/routable-component.d.ts",
+  "files": [
+    "dist",
+    "web"
+  ],
   "scripts": {
     "dist": "npm run node && npm run web",
     "node": "rm -rf dist && cross-env NODE_ENV=production webpack",
