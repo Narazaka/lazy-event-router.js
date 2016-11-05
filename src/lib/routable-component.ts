@@ -8,7 +8,7 @@ export class RoutableComponent extends EventEmitter {
   private readonly _routes: RoutableComponentRoutes;
   private readonly _controllerClasses: {[name: string]: RoutableComponentControllerConstructor};
   private readonly _controllers: {[name: string]: RoutableComponentController};
-  private readonly _components: {[name: string]: EventEmitter};
+  private readonly _components: {[name: string]: EventEmitter | any};
   private readonly _listeners: {[componentName: string]: {[eventName: string]: (() => void)[]}};
 
   /**
@@ -18,7 +18,7 @@ export class RoutableComponent extends EventEmitter {
    * @param controllerClasses コントローラクラスの連想配列
    */
   constructor(
-    components: {[name: string]: EventEmitter} = {},
+    components: {[name: string]: EventEmitter | any} = {},
     routes: RoutableComponentRoutes,
     controllerClasses: {[name: string]: RoutableComponentControllerConstructor},
   ) {
@@ -57,7 +57,7 @@ export class RoutableComponent extends EventEmitter {
    * すでにコンポーネントがあった場合は一度削除してから改めて追加する
    * @param components コンポーネントのリスト
    */
-  registerComponents(components: {[name: string]: EventEmitter}) {
+  registerComponents(components: {[name: string]: EventEmitter | any}) {
     for (const name of Object.keys(components)) {
       const component = components[name];
       this.registerComponent(name, component);
@@ -71,7 +71,7 @@ export class RoutableComponent extends EventEmitter {
    * @param name コンポーネント名
    * @param component コンポーネント
    */
-  registerComponent(name: string, component: EventEmitter) {
+  registerComponent(name: string, component: EventEmitter | any) {
     if (this.components[name]) this.unregisterComponent(name);
     this.components[name] = component;
     for (const route of this.routes) {
@@ -88,7 +88,7 @@ export class RoutableComponent extends EventEmitter {
       const listeners = this._listeners[name];
       for (const event of Object.keys(listeners)) {
         for (const listener of listeners[event]) {
-          this.components[name].removeListener(event, listener);
+          (<EventEmitter> this.components[name]).removeListener(event, listener);
         }
       }
     }
@@ -112,7 +112,7 @@ export class RoutableComponent extends EventEmitter {
       }
       this.controllers[route.controller][route.action](...args);
     };
-    this.components[route.from].on(route.event, listener);
+    (<EventEmitter> this.components[route.from]).on(route.event, listener);
     if (!this._listeners[route.from]) this._listeners[route.from] = {};
     if (!this._listeners[route.from][route.event]) this._listeners[route.from][route.event] = [];
     this._listeners[route.from][route.event].push(listener);
