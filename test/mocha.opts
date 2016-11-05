@@ -1,3 +1,5 @@
+--compilers ts:ts-node/register
 --compilers js:babel-register
 --ui mocha-lazy-bdd
---recursive
+test/*.js
+test/*.ts

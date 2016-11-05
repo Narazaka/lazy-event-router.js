@@ -1,16 +1,27 @@
-import {EventEmitter} from 'events';
+/// <reference types="node" />
+import {EventEmitter} from "events";
 
 /**
  * ルーティング可能なコンポーネント
  */
 export class RoutableComponent extends EventEmitter {
+  private readonly _routes: RoutableComponentRoutes;
+  private readonly _controllerClasses: {[name: string]: RoutableComponentControllerConstructor};
+  private readonly _controllers: {[name: string]: RoutableComponentController};
+  private readonly _components: {[name: string]: EventEmitter};
+  private readonly _listeners: {[componentName: string]: {[eventName: string]: (() => void)[]}};
+
   /**
    * constructor
-   * @param {Object<EventEmitter>} [components] コンポーネントの連想配列
-   * @param {RoutableComponentRoutes} routes ルーティング
-   * @param {Object<RoutableComponentController>} controllerClasses コントローラクラスの連想配列
+   * @param components コンポーネントの連想配列
+   * @param routes ルーティング
+   * @param controllerClasses コントローラクラスの連想配列
    */
-  constructor(components, routes, controllerClasses) {
+  constructor(
+    components: {[name: string]: EventEmitter} = {},
+    routes: RoutableComponentRoutes,
+    controllerClasses: {[name: string]: RoutableComponentControllerConstructor},
+  ) {
     super();
     this._routes = routes;
     this._controllerClasses = controllerClasses;
@@ -22,25 +33,21 @@ export class RoutableComponent extends EventEmitter {
 
   /**
    * Routes
-   * @type {RoutableComponentRoutes}
    */
   get routes() { return this._routes; }
 
   /**
    * Controllers
-   * @type {Hash<RoutableComponentController>}
    */
   get controllers() { return this._controllers; }
 
   /**
    * Controller classes
-   * @type {Hash<class<RoutableComponentController>>}
    */
   get controllerClasses() { return this._controllerClasses; }
 
   /**
    * Components
-   * @type {Hash<EventEmitter>}
    */
   get components() { return this._components; }
 
@@ -48,10 +55,9 @@ export class RoutableComponent extends EventEmitter {
    * コンポーネントを追加し、ルーティングによるイベントを設定する
    *
    * すでにコンポーネントがあった場合は一度削除してから改めて追加する
-   * @param {Object<RoutableComponent>} components コンポーネントのリスト
-   * @return {void}
+   * @param components コンポーネントのリスト
    */
-  registerComponents(components) {
+  registerComponents(components: {[name: string]: EventEmitter}) {
     for (const name of Object.keys(components)) {
       const component = components[name];
       this.registerComponent(name, component);
@@ -62,11 +68,10 @@ export class RoutableComponent extends EventEmitter {
    * コンポーネントを追加し、ルーティングによるイベントを設定する
    *
    * すでにコンポーネントがあった場合は一度削除してから改めて追加する
-   * @param {string} name コンポーネント名
-   * @param {RoutableComponent} component コンポーネント
-   * @return {void}
+   * @param name コンポーネント名
+   * @param component コンポーネント
    */
-  registerComponent(name, component) {
+  registerComponent(name: string, component: EventEmitter) {
     if (this.components[name]) this.unregisterComponent(name);
     this.components[name] = component;
     for (const route of this.routes) {
@@ -76,10 +81,9 @@ export class RoutableComponent extends EventEmitter {
 
   /**
    * コンポーネントを削除し、ルーティングによるイベントを破棄する
-   * @param {string} name コンポーネント名
-   * @return {void}
+   * @param name コンポーネント名
    */
-  unregisterComponent(name) {
+  unregisterComponent(name: string) {
     if (this.components[name] && this._listeners[name]) {
       const listeners = this._listeners[name];
       for (const event of Object.keys(listeners)) {
@@ -92,8 +96,8 @@ export class RoutableComponent extends EventEmitter {
     delete this._listeners[name];
   }
 
-  _attachRouteEvent(route) {
-    const listener = (...args) => {
+  _attachRouteEvent(route: RoutableComponentRoute) {
+    const listener = (...args: any[]) => {
       if (!this.controllers[route.controller]) {
         if (!(route.controller in this.controllerClasses)) {
           throw new Error(`controller [${route.controller}] not found`);
@@ -119,51 +123,51 @@ export class RoutableComponent extends EventEmitter {
  * ルーティング設定定義
  * @interface
  */
-export class RoutableComponentRouting {
+export interface RoutableComponentRouting {
   /**
    * ルーティングをセットアップする
-   * @param {RoutableComponentRoutes} routes ルーティング設定
-   * @return {void}
+   * @param routes ルーティング設定
    */
-  setup(routes) {
-    throw new Error('abstruct');
-  }
+  setup(routes: RoutableComponentRoutes): void;
 }
+
+export type RoutableComponentRoutingConstructor = new() => RoutableComponentRouting;
 
 /**
  * コントローラ
  * @interface
  */
-export class RoutableComponentController {
-  /**
-   * コンストラクタ
-   * @param {RoutableComponent} component コンポーネント
-   */
-  constructor(component) {
-    throw new Error('abstruct');
-  }
+export interface RoutableComponentController {
+  [action: string]: Function;
 }
+
+export type RoutableComponentControllerConstructor = new(component: RoutableComponent) => RoutableComponentController;
+
+export type RoutesDifiner = (routes: RoutableComponentRoutes) => void;
 
 /**
  * イベントのルーティング設定
  * @notice スレッドセーフではありません
  */
 export class RoutableComponentRoutes {
+  private readonly _routes: RoutableComponentRoute[];
+  private _currentFrom: string;
+  private _currentController: string;
+
   /**
    * コンストラクタ
-   * @param {RoutableComponentRouting|RoutableComponentRouting[]} routingClasses ルート定義クラス(の配列)
+   * @param routingClasses ルート定義クラス(の配列)
    */
-  constructor(routingClasses = []) {
+  constructor(routingClasses: RoutableComponentRoutingConstructor | RoutableComponentRoutingConstructor[] = []) {
     this._routes = [];
     this.includeRoute(routingClasses);
   }
 
   /**
    * ルートを設定する
-   * @param {Route|Route[]} routingClasses ルート定義クラス(の配列)
-   * @return {void}
+   * @param routingClasses ルート定義クラス(の配列)
    */
-  includeRoute(routingClasses) {
+  includeRoute(routingClasses: RoutableComponentRoutingConstructor | RoutableComponentRoutingConstructor[]) {
     const _routingClasses = routingClasses instanceof Array ? routingClasses : [routingClasses];
     for (const routeClass of _routingClasses) {
       const route = new routeClass();
@@ -176,9 +180,36 @@ export class RoutableComponentRoutes {
   }
 
   /**
+   * from, controllerを前提としてイベントを定義する
+   * @param event イベント
+   * @param action アクション
+   */
+  event(event: string, action?: string): void;
+  /**
+   * fromを前提としてイベントを定義する
+   * @param event イベント
+   * @param controller コントローラ
+   * @param action アクション
+   */
+  event(event: string, controller: string, action?: string): void;
+  /**
+   * controllerを前提としてイベントを定義する
+   * @param from イベント発生源
+   * @param event イベント
+   * @param [action] アクション
+   */
+  event(from: string, event: string, action?: string): void;
+  /**
+   * 前提なしとしてイベントを定義する
+   * @param from イベント発生源
+   * @param event イベント
+   * @param controller コントローラ
+   * @param action アクション
+   */
+  event(from: string, event: string, controller: string, action?: string): void;
+  /**
    * イベントを定義する
-   * @param {...string} args from, event, controller, action(前提としたものは省く)それぞれの名称文字列
-   * @return {void}
+   * @param args from, event, controller, action(前提としたものは省く)それぞれの名称文字列
    * @example
    * router.event('shell', 'clicked', 'ShellController', 'shell_clicked'); // full
    * router.event('shell', 'clicked', 'ShellController'); // event = action
@@ -191,28 +222,27 @@ export class RoutableComponentRoutes {
    *   });
    * });
    */
-  event(...args) {
+  event(...args: string[]) {
     if (this._currentFrom && this._currentController) {
-      if (args.length > 2) throw new Error('arguments too long');
-      this.eventOnFromController(...args);
+      if (args.length > 2) throw new Error("arguments too long");
+      this.eventOnFromController(args[0], args[1]);
     } else if (this._currentFrom) {
-      if (args.length > 3) throw new Error('arguments too long');
-      this.eventOnFrom(...args);
+      if (args.length > 3) throw new Error("arguments too long");
+      this.eventOnFrom(args[0], args[1], args[2]);
     } else if (this._currentController) {
-      if (args.length > 3) throw new Error('arguments too long');
-      this.eventOnController(...args);
+      if (args.length > 3) throw new Error("arguments too long");
+      this.eventOnController(args[0], args[1], args[2]);
     } else {
-      this.eventOnNone(...args);
+      this.eventOnNone(args[0], args[1], args[2], args[3]);
     }
   }
 
   /**
    * from, controllerを前提としてイベントを定義する
-   * @param {string} event イベント
-   * @param {string} [action] アクション
-   * @return {void}
+   * @param event イベント
+   * @param action アクション
    */
-  eventOnFromController(event, action = event) {
+  eventOnFromController(event: string, action: string = event) {
     const from = this._currentFrom;
     const controller = this._currentController;
     this.addRoute(from, event, controller, action);
@@ -220,47 +250,43 @@ export class RoutableComponentRoutes {
 
   /**
    * fromを前提としてイベントを定義する
-   * @param {string} event イベント
-   * @param {string} controller コントローラ
-   * @param {string} [action] アクション
-   * @return {void}
+   * @param event イベント
+   * @param controller コントローラ
+   * @param action アクション
    */
-  eventOnFrom(event, controller, action = event) {
+  eventOnFrom(event: string, controller: string, action: string = event) {
     const from = this._currentFrom;
     this.addRoute(from, event, controller, action);
   }
 
   /**
    * controllerを前提としてイベントを定義する
-   * @param {string} from イベント発生源
-   * @param {string} event イベント
-   * @param {string} [action] アクション
-   * @return {void}
+   * @param from イベント発生源
+   * @param event イベント
+   * @param action アクション
    */
-  eventOnController(from, event, action = event) {
+  eventOnController(from: string, event: string, action: string = event) {
     const controller = this._currentController;
     this.addRoute(from, event, controller, action);
   }
 
   /**
    * 前提なしとしてイベントを定義する
-   * @param {string} from イベント発生源
-   * @param {string} event イベント
-   * @param {string} controller コントローラ
-   * @param {string} [action] アクション
-   * @return {void}
+   * @param from イベント発生源
+   * @param event イベント
+   * @param controller コントローラ
+   * @param action アクション
    */
-  eventOnNone(from, event, controller, action = event) {
+  eventOnNone(from: string, event: string, controller: string, action: string = event) {
     this.addRoute(from, event, controller, action);
   }
 
   /**
    * イベント発生源を前提とする
-   * @param {string} from イベント発生源プロパティ名
-   * @param {Function} block 前提としたイベント発生源におけるルート定義を行う関数
-   * @return {void}
+   * @param from イベント発生源プロパティ名
+   * @param block 前提としたイベント発生源におけるルート定義を行う関数
    */
-  from(from, block) {
+  from(from: string, block: RoutesDifiner) {
     this._currentFrom = from;
     block(this);
     delete this._currentFrom;
@@ -268,11 +294,10 @@ export class RoutableComponentRoutes {
 
   /**
    * コントローラーを前提とする
-   * @param {string} controller コントローラ名
-   * @param {Function} block 前提としたコントローラにおけるルート定義を行う関数
-   * @return {void}
+   * @param controller コントローラ名
+   * @param block 前提としたコントローラにおけるルート定義を行う関数
    */
-  controller(controller, block) {
+  controller(controller: string, block: RoutesDifiner) {
     this._currentController = controller;
     block(this);
     delete this._currentController;
@@ -280,19 +305,18 @@ export class RoutableComponentRoutes {
 
   /**
    * ルート定義を追加する
-   * @param {string} from イベント発生源
-   * @param {string} event イベント
-   * @param {string} controller コントローラ
-   * @param {string} action アクション
-   * @return {void}
+   * @param from イベント発生源
+   * @param event イベント
+   * @param controller コントローラ
+   * @param action アクション
    */
-  addRoute(from, event, controller, action) {
+  addRoute(from: string, event: string, controller: string, action: string) {
     this._routes.push(new RoutableComponentRoute(from, event, controller, action));
   }
 
   /**
    * ルーティングの状態を返す
-   * @return {string} ルーティングの状態を示す文字列
+   * @return ルーティングの状態を示す文字列
    */
   toString() {
     return this._routes
@@ -300,8 +324,8 @@ export class RoutableComponentRoutes {
         (a.from === b.from ? 0 : a.from > b.from ? 10 : -10)
           + (a.event === b.event ? 0 : a.event > b.event ? 1 : -1)
       )
-      .map((route) => route.toString() + '\n')
-      .join('');
+      .map((route) => route.toString() + "\n")
+      .join("");
   }
 }
 
@@ -309,14 +333,19 @@ export class RoutableComponentRoutes {
  * ルート
  */
 export class RoutableComponentRoute {
+  private readonly _from: string;
+  private readonly _event: string;
+  private readonly _controller: string;
+  private readonly _action: string;
+
   /**
    * コンストラクタ
-   * @param {string} from イベント発生源
-   * @param {string} event イベント
-   * @param {string} controller コントローラ
-   * @param {string} action アクション
+   * @param from イベント発生源
+   * @param event イベント
+   * @param controller コントローラ
+   * @param action アクション
    */
-  constructor(from, event, controller, action) {
+  constructor(from: string, event: string, controller: string, action: string) {
     this._checkConstructorArguments(from, event, controller, action);
     this._from = from;
     this._event = event;
@@ -324,41 +353,36 @@ export class RoutableComponentRoute {
     this._action = action;
   }
 
-  _checkConstructorArguments(from, event, controller, action) {
-    const isString = (obj) => typeof obj === 'string' || obj instanceof String;
-    if (from == null) throw new Error('register routing error: from is empty!');
-    if (event == null) throw new Error('register routing error: event is empty!');
-    if (controller == null) throw new Error('register routing error: controller is empty!');
-    if (action == null) throw new Error('register routing error: action is empty!');
+  _checkConstructorArguments(from: string, event: string, controller: string, action: string) {
+    const isString = (obj: any) => typeof obj === "string" || obj instanceof String;
+    if (from == null) throw new Error("register routing error: from is empty!");
+    if (event == null) throw new Error("register routing error: event is empty!");
+    if (controller == null) throw new Error("register routing error: controller is empty!");
+    if (action == null) throw new Error("register routing error: action is empty!");
     if (!isString(from) || !isString(event) || !isString(controller) || !isString(action)) {
-      throw new Error('register routing error: arguments must be string!');
+      throw new Error("register routing error: arguments must be string!");
     }
   }
 
   /**
    * イベント発生源
-   * @type {string}
    */
   get from() { return this._from; }
   /**
    * イベント
-   * @type {string}
    */
   get event() { return this._event; }
   /**
    * コントローラ
-   * @type {string}
    */
   get controller() { return this._controller; }
   /**
    * アクション
-   * @type {string}
    */
   get action() { return this._action; }
 
   /**
    * ルーティングの状態を返す
-   * @return {string} ルーティングの状態を示す文字列
    */
   toString() {
     return `${this.from}.${this.event} => ${this.controller}#${this.action}`;

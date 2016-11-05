@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "tslint:recommended"
+    ],
+    "rules": {
+        "member-access": [
+            false
+        ],
+        "interface-name": [
+            false
+        ],
+        "curly": false,
+        "variable-name": [true, "allow-leading-underscore"]
+    }
+}
