@@ -4,6 +4,7 @@
   "description": "Routable component",
   "keywords": [],
   "main": "./lib/routable-component.js",
+  "types": "./src/lib/routable-component.d.ts",
   "scripts": {
     "test": "gulp test"
   },
