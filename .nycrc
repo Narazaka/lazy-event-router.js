@@ -14,5 +14,10 @@
     "ts-node/register",
     "babel-register"
   ],
+  "reporter": [
+    "lcov",
+    "html",
+    "text"
+  ],
   "all": true
 }
