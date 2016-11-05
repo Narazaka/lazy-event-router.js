@@ -23,28 +23,16 @@ npm:
 npm install routable-component
 ```
 
-bower:
-```
-bower install routable-component
-```
-
 ## Usage
 
 node.js:
 ```javascript
-var routableComponent = require('routable-component');
-var RoutableComponent = routableComponent.RoutableComponent;
-```
-
-browser:
-```html
-<script src="routable-component.js"></script>
-var RoutableComponent = routableComponent.RoutableComponent;
+import {RoutableComponent} from 'routable-component';
 ```
 
 ## API
 
-[API Document](https://doc.esdoc.org/github.com/Ikagaka/routable-component.js/)
+[API Document](https://ikagaka.github.io/routable-component.js/)
 
 ## License
 
