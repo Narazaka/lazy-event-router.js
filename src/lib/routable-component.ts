@@ -105,12 +105,14 @@ export class RoutableComponent extends EventEmitter {
         this.controllers[route.controller] =
           new this.controllerClasses[route.controller](this);
       }
-      if (!this.controllers[route.controller][route.action]) {
+      const action = (<any> this.controllers[route.controller])[route.action];
+      if (action && action instanceof Function) {
+        (<any> this.controllers[route.controller])[route.action](...args); // this維持のため
+      } else {
         throw new Error(
           `controller [${route.controller}] does not have action [${route.action}]`
         );
       }
-      this.controllers[route.controller][route.action](...args);
     };
     (<EventEmitter> this.components[route.from]).on(route.event, listener);
     if (!this._listeners[route.from]) this._listeners[route.from] = {};
@@ -119,10 +121,7 @@ export class RoutableComponent extends EventEmitter {
   }
 }
 
-/**
- * ルーティング設定定義
- * @interface
- */
+/** ルーティング設定定義 */
 export interface RoutableComponentRouting {
   /**
    * ルーティングをセットアップする
@@ -133,12 +132,8 @@ export interface RoutableComponentRouting {
 
 export type RoutableComponentRoutingConstructor = new() => RoutableComponentRouting;
 
-/**
- * コントローラ
- * @interface
- */
+/** コントローラ */
 export interface RoutableComponentController {
-  [action: string]: Function;
 }
 
 export type RoutableComponentControllerConstructor = new(component: RoutableComponent) => RoutableComponentController;
