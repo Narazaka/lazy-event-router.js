@@ -1,38 +1,38 @@
-# [routable-component.js](https://github.com/Ikagaka/routable-component.js)
+# [lazy-event-router.js](https://github.com/Narazaka/lazy-event-router.js)
 
-[![npm](https://img.shields.io/npm/v/routable-component.svg)](https://www.npmjs.com/package/routable-component)
-[![npm license](https://img.shields.io/npm/l/routable-component.svg)](https://www.npmjs.com/package/routable-component)
-[![npm download total](https://img.shields.io/npm/dt/routable-component.svg)](https://www.npmjs.com/package/routable-component)
-[![npm download by month](https://img.shields.io/npm/dm/routable-component.svg)](https://www.npmjs.com/package/routable-component)
-[![Bower](https://img.shields.io/bower/v/routable-component.svg)](https://github.com/Ikagaka/routable-component.js)
-[![Bower](https://img.shields.io/bower/l/routable-component.svg)](https://github.com/Ikagaka/routable-component.js)
+[![npm](https://img.shields.io/npm/v/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
+[![npm license](https://img.shields.io/npm/l/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
+[![npm download total](https://img.shields.io/npm/dt/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
+[![npm download by month](https://img.shields.io/npm/dm/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
+[![Bower](https://img.shields.io/bower/v/lazy-event-router.svg)](https://github.com/Narazaka/lazy-event-router.js)
+[![Bower](https://img.shields.io/bower/l/lazy-event-router.svg)](https://github.com/Narazaka/lazy-event-router.js)
 
-[![Dependency Status](https://david-dm.org/Ikagaka/routable-component.js.svg)](https://david-dm.org/Ikagaka/routable-component.js)
-[![devDependency Status](https://david-dm.org/Ikagaka/routable-component.js/dev-status.svg)](https://david-dm.org/Ikagaka/routable-component.js#info=devDependencies)
-[![Travis Build Status](https://travis-ci.org/Ikagaka/routable-component.js.svg)](https://travis-ci.org/Ikagaka/routable-component.js)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Ikagaka/routable-component.js?svg=true)](https://ci.appveyor.com/project/Narazaka/routable-component-js)
-[![codecov.io](https://codecov.io/github/Ikagaka/routable-component.js/coverage.svg?branch=master)](https://codecov.io/github/Ikagaka/routable-component.js?branch=master)
-[![Code Climate](https://codeclimate.com/github/Ikagaka/routable-component.js/badges/gpa.svg)](https://codeclimate.com/github/Ikagaka/routable-component.js)
+[![Dependency Status](https://david-dm.org/Narazaka/lazy-event-router.js.svg)](https://david-dm.org/Narazaka/lazy-event-router.js)
+[![devDependency Status](https://david-dm.org/Narazaka/lazy-event-router.js/dev-status.svg)](https://david-dm.org/Narazaka/lazy-event-router.js#info=devDependencies)
+[![Travis Build Status](https://travis-ci.org/Narazaka/lazy-event-router.js.svg)](https://travis-ci.org/Narazaka/lazy-event-router.js)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/lazy-event-router.js?svg=true)](https://ci.appveyor.com/project/Narazaka/lazy-event-router-js)
+[![codecov.io](https://codecov.io/github/Narazaka/lazy-event-router.js/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/lazy-event-router.js?branch=master)
+[![Code Climate](https://codeclimate.com/github/Narazaka/lazy-event-router.js/badges/gpa.svg)](https://codeclimate.com/github/Narazaka/lazy-event-router.js)
 
-Routable Component
+an event router
 
 ## Install
 
 npm:
 ```
-npm install routable-component
+npm install lazy-event-router
 ```
 
 ## Usage
 
 node.js:
 ```javascript
-import {RoutableComponent} from 'routable-component';
+import {RoutableComponent} from "lazy-event-router";
 ```
 
 ## API
 
-[API Document](https://ikagaka.github.io/routable-component.js/)
+[API Document](https://narazaka.github.io/lazy-event-router.js/)
 
 ## License
 

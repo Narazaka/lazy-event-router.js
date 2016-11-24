@@ -10,6 +10,9 @@
             false
         ],
         "curly": false,
-        "variable-name": [true, "allow-leading-underscore"]
+        "variable-name": [true, "allow-leading-underscore"],
+        "max-classes-per-file": [
+            false
+        ]
     }
 }
