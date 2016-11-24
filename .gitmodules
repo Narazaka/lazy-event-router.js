@@ -1,4 +1,4 @@
 [submodule "doc"]
 	path = doc
-	url = https://github.com/Ikagaka/routable-component.js
+	url = https://github.com/Narazaka/lazy-event-router.js
 	branch = gh-pages
