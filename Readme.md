@@ -4,8 +4,6 @@
 [![npm license](https://img.shields.io/npm/l/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
 [![npm download total](https://img.shields.io/npm/dt/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
 [![npm download by month](https://img.shields.io/npm/dm/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
-[![Bower](https://img.shields.io/bower/v/lazy-event-router.svg)](https://github.com/Narazaka/lazy-event-router.js)
-[![Bower](https://img.shields.io/bower/l/lazy-event-router.svg)](https://github.com/Narazaka/lazy-event-router.js)
 
 [![Dependency Status](https://david-dm.org/Narazaka/lazy-event-router.js.svg)](https://david-dm.org/Narazaka/lazy-event-router.js)
 [![devDependency Status](https://david-dm.org/Narazaka/lazy-event-router.js/dev-status.svg)](https://david-dm.org/Narazaka/lazy-event-router.js#info=devDependencies)
