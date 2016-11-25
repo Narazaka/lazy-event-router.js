@@ -8,7 +8,7 @@ export class LazyEventRouter {
   private readonly _routes: EventRoutes;
   private readonly _controllers: Map<new(eventRouterHub: LazyEventRouter) =>
     EventController, EventController>;
-  private readonly _components: Map<new() => any, any>;
+  private readonly _components: Map<new(...args: any[]) => any, any>;
   private readonly _listeners: Map<Function, Map<Function, {[eventName: string]: Function[]}>>;
 
   /**
@@ -42,12 +42,12 @@ export class LazyEventRouter {
   /**
    * Component
    */
-  component<T>(componentClass: new() => T) { return <T> this._components.get(componentClass); }
+  component<T>(componentClass: new(...args: any[]) => T) { return <T> this._components.get(componentClass); }
 
   /**
    * has Component?
    */
-  hasComponent<T>(componentClass: new() => T) { return this._components.has(componentClass); }
+  hasComponent<T>(componentClass: new(...args: any[]) => T) { return this._components.has(componentClass); }
 
   /**
    * コンポーネントを追加し、ルーティングによるイベントを設定する
@@ -80,7 +80,7 @@ export class LazyEventRouter {
    * コンポーネントを削除し、ルーティングによるイベントを破棄する
    * @param componentClass コンポーネントクラス
    */
-  unregisterComponent(componentClass: new() => any) {
+  unregisterComponent(componentClass: new(...args: any[]) => any) {
     const component = this.component(componentClass);
     const listenersBycomponent = this._listeners.get(componentClass);
     if (component instanceof EventEmitter && listenersBycomponent) {
@@ -263,7 +263,7 @@ export type EventControllerConstructor = new(eventRouterHub: LazyEventRouter) =>
 export type EventSetter<T extends EventEmitter, C> = (from: T, controller: C) => void;
 
 export type RouteSetting = {
-  fromClass: new() => EventEmitter,
+  fromClass: new(...args: any[]) => EventEmitter,
   controllerClass: new(eventRouterHub: LazyEventRouter) => any,
   setting: EventSetter<EventEmitter, any>,
 };
