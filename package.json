@@ -15,6 +15,7 @@
     "web": "rm -rf web && cross-env NODE_ENV=production webpack --config ./webpack.config.web.js",
     "lint": "npm run eslint && npm run tslint",
     "eslint": "eslint *.js src test",
+    "prepublish": "npm run dist",
     "tslint": "tslint  tslint *.ts src/**/*.ts test/**/*.ts",
     "test": "npm run test-node && npm run test-web",
     "test-node": "cross-env NODE_ENV=test nyc mocha",
