@@ -1,6 +1,14 @@
 import {EventEmitter} from "events";
-import {EventRegisterer} from "./event_registerer";
-import {EventController, EventRoutes, RouteSetting} from "./event_routes";
+import {EventListener, EventRegisterer} from "./event_registerer";
+import {EventController, EventControllerClass, EventRoutes, RouteSetting} from "./event_routes";
+
+export * from "./event_registerer";
+export * from "./event_route_setter";
+export * from "./event_route_setter_with_controller";
+export * from "./event_route_setter_with_from";
+export * from "./event_routes";
+
+export type ComponentClass<T> = new(...args: any[]) => T;
 
 /**
  * ルーティング可能なコンポーネント
@@ -10,7 +18,8 @@ export class LazyEventRouter {
   private readonly _controllers: Map<new(eventRouterHub: LazyEventRouter) =>
     EventController, EventController>;
   private readonly _components: Map<new(...args: any[]) => any, any>;
-  private readonly _listeners: Map<Function, Map<Function, {[eventName: string]: Function[]}>>;
+  private readonly _listeners:
+    Map<ComponentClass<any>, Map<EventControllerClass<EventController>, {[eventName: string]: EventListener[]}>>;
 
   /**
    * constructor
@@ -36,19 +45,21 @@ export class LazyEventRouter {
   /**
    * Controller
    */
-  controller<T>(controllerClass: new(eventRouterHub: LazyEventRouter) => T) {
-    return this._controllers.get(controllerClass);
+  controller<T>(controllerClass: new(eventRouterHub: LazyEventRouter) => T): T | undefined {
+    return this._controllers.get(controllerClass) as T | undefined;
   }
 
   /**
    * Component
    */
-  component<T>(componentClass: new(...args: any[]) => T) { return this._components.get(componentClass); }
+  component<T>(componentClass: ComponentClass<T>): T | undefined {
+    return this._components.get(componentClass) as T | undefined;
+  }
 
   /**
    * has Component?
    */
-  hasComponent<T>(componentClass: new(...args: any[]) => T) { return this._components.has(componentClass); }
+  hasComponent<T>(componentClass: ComponentClass<T>) { return this._components.has(componentClass); }
 
   /**
    * コンポーネントを追加し、ルーティングによるイベントを設定する
@@ -81,7 +92,7 @@ export class LazyEventRouter {
    * コンポーネントを削除し、ルーティングによるイベントを破棄する
    * @param componentClass コンポーネントクラス
    */
-  unregisterComponent(componentClass: new(...args: any[]) => any) {
+  unregisterComponent(componentClass: ComponentClass<any>) {
     const component = this.component(componentClass);
     const listenersBycomponent = this._listeners.get(componentClass);
     if (component instanceof EventEmitter && listenersBycomponent) {
@@ -116,7 +127,7 @@ export class LazyEventRouter {
   }
 
   private _attachRouteEvent(routeSetting: RouteSetting) {
-    const component = this.component(routeSetting.eventSourceClass);
+    const component = this.component(routeSetting.eventSourceClass) as EventEmitter;
     const controllerClass = routeSetting.controllerClass;
     let controller = this.controller(controllerClass);
     if (!controller) {
@@ -124,7 +135,7 @@ export class LazyEventRouter {
       bindAll(controller); // イベント定義の便利化とイベント登録解除のため
       this._controllers.set(controllerClass, controller);
     }
-    const componentClass = component.constructor;
+    const componentClass = component.constructor as ComponentClass<any>;
     let listenersBycomponent = this._listeners.get(componentClass);
     if (!listenersBycomponent) this._listeners.set(componentClass, (listenersBycomponent = new Map()));
     let listeners = listenersBycomponent.get(controllerClass);
@@ -139,7 +150,7 @@ function allMethods(object: any) {
   let prototype = object;
   do {
     for (const property of Object.getOwnPropertyNames(prototype)
-      .concat(<any[]> Object.getOwnPropertySymbols(prototype))
+      .concat(Object.getOwnPropertySymbols(prototype) as any[])
     ) {
       if (typeof object[property] === "function") properties[property] = true;
     }

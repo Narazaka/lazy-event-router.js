@@ -22,7 +22,7 @@ class MyUsefulRouting implements EventRouting {
 class MyEventSourceComponent extends EventEmitter {
   on(event: "myevent", listener: (arg1: string, arg2: number) => void): this;
   on(event: "plus", listener: () => void): this;
-  on(event: string, listener: Function) {
+  on(event: string, listener: (...args: any[]) => any) {
     return super.on(event, listener);
   }
 
@@ -72,9 +72,13 @@ describe("LazyEventRouter", () => {
 
       it("event works", () => {
         const _subject = subject();
-        _subject.component(MyEventSourceComponent).emit("myevent", "1", 2);
-        assert(_subject.controller(MyController).router === _subject);
-        assert.deepEqual(_subject.controller(MyController).myactionArgs, ["1", 2]);
+        const component = _subject.component(MyEventSourceComponent) as MyEventSourceComponent;
+        assert(component instanceof MyEventSourceComponent);
+        component.emit("myevent", "1", 2);
+        const controller = _subject.controller(MyController) as MyController;
+        assert(controller instanceof MyController);
+        assert(controller.router === _subject);
+        assert.deepEqual(controller.myactionArgs, ["1", 2]);
       });
     });
   });
@@ -85,10 +89,13 @@ describe("LazyEventRouter", () => {
     it("surely registered", () => {
       const _subject = subject();
       _subject.registerComponent(new MyEventSourceComponent());
-      assert(_subject.component(MyEventSourceComponent) instanceof MyEventSourceComponent);
-      _subject.component(MyEventSourceComponent).emit("myevent", "1", 2);
-      assert(_subject.controller(MyController).router === _subject);
-      assert.deepEqual(_subject.controller(MyController).myactionArgs, ["1", 2]);
+      const component = _subject.component(MyEventSourceComponent) as MyEventSourceComponent;
+      assert(component instanceof MyEventSourceComponent);
+      component.emit("myevent", "1", 2);
+      const controller = _subject.controller(MyController) as MyController;
+      assert(controller instanceof MyController);
+      assert(controller.router === _subject);
+      assert.deepEqual(controller.myactionArgs, ["1", 2]);
     });
 
     it("registers only one component event (same instance)", () => {
@@ -96,8 +103,8 @@ describe("LazyEventRouter", () => {
       const component = new MyEventSourceComponent();
       _subject.registerComponent(component);
       _subject.registerComponent(component);
-      _subject.component(MyEventSourceComponent).emit("plus");
-      assert(_subject.controller(MyController).count === 1);
+      (_subject.component(MyEventSourceComponent) as MyEventSourceComponent).emit("plus");
+      assert((_subject.controller(MyController) as MyController).count === 1);
     });
 
     it("registers only one component event (different instance)", () => {
@@ -106,8 +113,8 @@ describe("LazyEventRouter", () => {
       _subject.registerComponent(component);
       const component2 = new MyEventSourceComponent();
       _subject.registerComponent(component2);
-      _subject.component(MyEventSourceComponent).emit("plus");
-      assert(_subject.controller(MyController).count === 1);
+      (_subject.component(MyEventSourceComponent) as MyEventSourceComponent).emit("plus");
+      assert((_subject.controller(MyController) as MyController).count === 1);
     });
   });
 
@@ -122,7 +129,7 @@ describe("LazyEventRouter", () => {
       _subject.unregisterComponent(MyEventSourceComponent);
       component.emit("plus");
       assert(_subject.component(MyEventSourceComponent) === undefined);
-      assert(_subject.controller(MyController).count === 1);
+      assert((_subject.controller(MyController) as MyController).count === 1);
     });
 
     it("not unregistered other scope events", () => {
@@ -135,7 +142,7 @@ describe("LazyEventRouter", () => {
       _subject.unregisterComponent(MyEventSourceComponent);
       component.emit("plus");
       assert(_subject.component(MyEventSourceComponent) === undefined);
-      assert(_subject.controller(MyController).count === 1);
+      assert((_subject.controller(MyController) as MyController).count === 1);
       assert(count === 2);
     });
   });

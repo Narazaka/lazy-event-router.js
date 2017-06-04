@@ -5,7 +5,7 @@ import {
   EventRoutes,
   EventRouteSetter,
   EventRouting,
-  EventRoutingConstructor,
+  EventRoutingClass,
   LazyEventRouter,
 } from "../src/lib/lazy-event-router";
 
@@ -15,7 +15,7 @@ class From1 extends EventEmitter {
   constructor() { super(); }
   on(event: "event1", listener: (arg1: string, arg2: number) => void): this;
   on(event: "event2", listener: () => void): this;
-  on(event: string, listener: Function) {
+  on(event: string, listener: (...args: any[]) => any) {
     return super.on(event, listener);
   }
 
@@ -30,7 +30,7 @@ class From2 extends EventEmitter {
   constructor() { super(); }
   on(event: "event3", listener: (arg: boolean) => void): this;
   on(event: "event4", listener: (arg: string) => void): this;
-  on(event: string, listener: Function) {
+  on(event: string, listener: (...args: any[]) => any) {
     return super.on(event, listener);
   }
 
@@ -133,7 +133,7 @@ const allRoutes = new RegExp([
 
 if (From1.name) { // IE not supports Function#name
   describe("LazyEventRouter", () => {
-    const subject = (components: EventEmitter[], routing: EventRoutingConstructor | EventRoutingConstructor[]) =>
+    const subject = (components: EventEmitter[], routing: EventRoutingClass | EventRoutingClass[]) =>
       new LazyEventRouter(components, new EventRoutes(routing));
     describe("#toString", () => {
       context("by froms", () => {
@@ -181,7 +181,7 @@ if (From1.name) { // IE not supports Function#name
     });
 
     describe("#includeRoute", () => {
-      const subject = (components: EventEmitter[], routing: EventRoutingConstructor | EventRoutingConstructor[]) =>
+      const subject = (components: EventEmitter[], routing: EventRoutingClass | EventRoutingClass[]) =>
         new LazyEventRouter(components, new EventRoutes().includeRoute(routing));
       context("single routing classes", () => {
         it("surely included", () => {

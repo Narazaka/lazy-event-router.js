@@ -1,3 +1,4 @@
+// tslint:disable no-empty-interface
 import {EventEmitter} from "events";
 import {EventRouteSetter} from "./event_route_setter";
 import {LazyEventRouter} from "./lazy-event-router";
@@ -28,14 +29,14 @@ export type EventControllerClass<C extends EventController> = new(lazyEventRoute
 export type EventSetter<T extends EventEmitter, C> = (from: T, controller: C) => void;
 
 /** ルーティングの設定 */
-export type RouteSetting = {
+export interface RouteSetting {
   /** イベントソースクラス */
-  eventSourceClass: EventSourceClass<EventEmitter>,
+  eventSourceClass: EventSourceClass<EventEmitter>;
   /** コントローラークラス */
-  controllerClass: EventControllerClass<EventController>,
+  controllerClass: EventControllerClass<EventController>;
   /** イベントの定義 */
-  setting: EventSetter<EventEmitter, any>,
-};
+  setting: EventSetter<EventEmitter, any>;
+}
 
 /** イベントの全ルーティング設定 */
 export class EventRoutes {

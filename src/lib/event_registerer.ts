@@ -1,45 +1,47 @@
 import {EventEmitter} from "events";
 
+export type EventListener = (...args: any[]) => any;
+
 export class EventRegisterer implements EventEmitter {
-  private _allListeners: {[eventName: string]: Function[]};
+  private _allListeners: {[eventName: string]: EventListener[]};
   private _component: EventEmitter;
 
-  constructor(allListeners: {[eventName: string]: Function[]}, component: EventEmitter) {
+  constructor(allListeners: {[eventName: string]: EventListener[]}, component: EventEmitter) {
     this._allListeners = allListeners;
     this._component = component;
   }
 
-  addListener(event: string | symbol, listener: Function) {
+  addListener(event: string | symbol, listener: EventListener) {
     this._listeners(event).push(listener);
     this._component.addListener(event, listener);
     return this;
   }
 
-  on(event: string | symbol, listener: Function) {
+  on(event: string | symbol, listener: EventListener) {
     this._listeners(event).push(listener);
     this._component.on(event, listener);
     return this;
   }
 
-  once(event: string | symbol, listener: Function) {
+  once(event: string | symbol, listener: EventListener) {
     this._listeners(event).push(listener);
     this._component.once(event, listener);
     return this;
   }
 
-  prependListener(event: string | symbol, listener: Function) {
+  prependListener(event: string | symbol, listener: EventListener) {
     this._listeners(event).unshift(listener);
     this._component.prependListener(event, listener);
     return this;
   }
 
-  prependOnceListener(event: string | symbol, listener: Function) {
+  prependOnceListener(event: string | symbol, listener: EventListener) {
     this._listeners(event).unshift(listener);
     this._component.prependOnceListener(event, listener);
     return this;
   }
 
-  removeListener(event: string | symbol, listener: Function) {
+  removeListener(event: string | symbol, listener: EventListener) {
     this._component.removeListener(event, listener);
     const listeners = this._listeners(event);
     const index = listeners.indexOf(listener);
