@@ -1,5 +1,7 @@
 /// <reference types="node" />
 import {EventEmitter} from "events";
+import {EventRegisterer} from "./event_registerer";
+import {EventController, EventRoutes, RouteSetting} from "./event_routes";
 
 /**
  * ルーティング可能なコンポーネント
@@ -119,7 +121,7 @@ export class LazyEventRouter {
     const controllerClass = routeSetting.controllerClass;
     let controller = this.controller(controllerClass);
     if (!controller) {
-      controller = new controllerClass(this) as EventController;
+      controller = new controllerClass(this);
       bindAll(controller); // イベント定義の便利化とイベント登録解除のため
       this._controllers.set(controllerClass, controller);
     }
@@ -130,96 +132,6 @@ export class LazyEventRouter {
     if (!listeners) listenersBycomponent.set(controllerClass, (listeners = {}));
     const fakeComponent = new EventRegisterer(listeners, component);
     routeSetting.setting(fakeComponent, controller);
-  }
-}
-
-class EventRegisterer implements EventEmitter {
-  private _allListeners: {[eventName: string]: Function[]};
-  private _component: EventEmitter;
-
-  constructor(allListeners: {[eventName: string]: Function[]}, component: EventEmitter) {
-    this._allListeners = allListeners;
-    this._component = component;
-  }
-
-  addListener(event: string | symbol, listener: Function) {
-    this._listeners(event).push(listener);
-    this._component.addListener(event, listener);
-    return this;
-  }
-
-  on(event: string | symbol, listener: Function) {
-    this._listeners(event).push(listener);
-    this._component.on(event, listener);
-    return this;
-  }
-
-  once(event: string | symbol, listener: Function) {
-    this._listeners(event).push(listener);
-    this._component.once(event, listener);
-    return this;
-  }
-
-  prependListener(event: string | symbol, listener: Function) {
-    this._listeners(event).unshift(listener);
-    this._component.prependListener(event, listener);
-    return this;
-  }
-
-  prependOnceListener(event: string | symbol, listener: Function) {
-    this._listeners(event).unshift(listener);
-    this._component.prependOnceListener(event, listener);
-    return this;
-  }
-
-  removeListener(event: string | symbol, listener: Function) {
-    this._component.removeListener(event, listener);
-    const listeners = this._listeners(event);
-    const index = listeners.indexOf(listener);
-    if (index !== -1) listeners.splice(index, 1);
-    return this;
-  }
-
-  removeAllListeners(event?: string | symbol) {
-    this._component.removeAllListeners(event);
-    if (event) {
-      delete this._allListeners[event];
-    } else {
-      for (const _event of Object.keys(this._allListeners)) {
-        delete this._allListeners[_event];
-      }
-    }
-    return this;
-  }
-
-  setMaxListeners(n: number) {
-    this._component.setMaxListeners(n);
-    return this;
-  }
-
-  getMaxListeners() {
-    return this._component.getMaxListeners();
-  }
-
-  listeners(event: string | symbol) {
-    return this._component.listeners(event);
-  }
-
-  emit(event: string | symbol, ...args: any[]) {
-    return this._component.emit(event, ...args);
-  }
-
-  eventNames() {
-    return this._component.eventNames();
-  }
-
-  listenerCount(event: string | symbol) {
-    return this._component.listenerCount(event);
-  }
-
-  private _listeners(event: string | symbol) {
-    if (!this._allListeners[event]) this._allListeners[event] = [];
-    return this._allListeners[event];
   }
 }
 
@@ -240,149 +152,5 @@ function allMethods(object: any) {
 function bindAll(object: any) {
   for (const method of allMethods(object)) {
     object[method] = object[method].bind(object);
-  }
-}
-
-/** ルーティング設定定義 */
-export interface EventRouting {
-  /**
-   * ルーティングをセットアップする
-   * @param routes ルーティング設定
-   */
-  setup(routes: EventRouteSetter): void;
-}
-
-export type EventRoutingConstructor = new() => EventRouting;
-
-/** コントローラ */
-export interface EventController {
-}
-
-export type EventControllerConstructor = new(eventRouterHub: LazyEventRouter) => EventController;
-
-export type EventSetter<T extends EventEmitter, C> = (from: T, controller: C) => void;
-
-export type RouteSetting = {
-  fromClass: new(...args: any[]) => EventEmitter,
-  controllerClass: new(eventRouterHub: LazyEventRouter) => any,
-  setting: EventSetter<EventEmitter, any>,
-};
-
-/**
- * イベントのルーティング設定
- */
-export class EventRoutes {
-  routeSetter: EventRouteSetter;
-  routeSettings: RouteSetting[] = [];
-
-  /**
-   * コンストラクタ
-   * @param routingClasses ルート定義クラス(の配列)
-   */
-  constructor(routingClasses: EventRoutingConstructor | EventRoutingConstructor[] = []) {
-    this.routeSetter = new EventRouteSetter(this);
-    this.includeRoute(routingClasses);
-  }
-
-  /**
-   * ルートを設定する
-   * @param routingClasses ルート定義クラス(の配列)
-   */
-  includeRoute(routingClasses: EventRoutingConstructor | EventRoutingConstructor[]) {
-    const _routingClasses = routingClasses instanceof Array ? routingClasses : [routingClasses];
-    for (const routeClass of _routingClasses) {
-      const route = new routeClass();
-      route.setup(this.routeSetter);
-    }
-    return this;
-  }
-}
-
-export class EventRouteSetter {
-  private _routes: EventRoutes;
-
-  constructor(routes: EventRoutes) {
-    this._routes = routes;
-  }
-
-  /**
-   * イベント発生源を前提とする
-   * @param fromClass イベント発生源クラス
-   * @param setting イベント定義を行う関数
-   */
-  from<T extends EventEmitter>(
-    fromClass: new(...args: any[]) => T,
-    setting: (routes: EventRouteSetterWithFrom<T>) => void,
-  ) {
-    const routes = new EventRouteSetterWithFrom(this._routes, fromClass);
-    setting(routes);
-    return this;
-  }
-
-  /**
-   * controllerを前提とする
-   * @param controllerClass コントローラークラス
-   * @param setting イベント定義を行う関数
-   */
-  controller<C>(
-    controllerClass: new(eventRouterHub: LazyEventRouter) => C,
-    setting: (rotues: EventRouteSetterWithController<C>) => void,
-  ) {
-    const routes = new EventRouteSetterWithController(this._routes, controllerClass);
-    setting(routes);
-    return this;
-  }
-
-  /**
-   * fromとcontrollerを前提としてイベントを定義する
-   * @param fromClass イベント発生源クラス
-   * @param controllerClass コントローラークラス
-   * @param setting イベント定義を行う関数
-   */
-  fromAndController<T extends EventEmitter, C>(
-    fromClass: new(...args: any[]) => T,
-    controllerClass: new(eventRouterHub: LazyEventRouter) => C,
-    setting: EventSetter<T, C>,
-  ) {
-    this._routes.routeSettings.push({fromClass, controllerClass, setting});
-    return this;
-  }
-}
-
-export class EventRouteSetterWithFrom<T extends EventEmitter> {
-  private _fromClass: new(...args: any[]) => T;
-  private _routes: EventRoutes;
-
-  constructor(routes: EventRoutes, fromClass: new(...args: any[]) => T) {
-    this._routes = routes;
-    this._fromClass = fromClass;
-  }
-
-  /**
-   * controllerを前提としてイベントを定義する
-   * @param controllerClass コントローラークラス
-   * @param setting イベント定義を行う関数
-   */
-  controller<C>(controllerClass: new(eventRouterHub: LazyEventRouter) => C, setting: EventSetter<T, C>) {
-    this._routes.routeSettings.push({fromClass: this._fromClass, controllerClass, setting});
-  }
-}
-
-export class EventRouteSetterWithController<C> {
-  private _controllerClass: new(eventRouterHub: LazyEventRouter) => C;
-  private _routes: EventRoutes;
-
-  constructor(routes: EventRoutes, controllerClass: new(eventRouterHub: LazyEventRouter) => C) {
-    this._routes = routes;
-    this._controllerClass = controllerClass;
-  }
-
-  /**
-   * イベント発生源を前提としてイベントを定義する
-   * @param fromClass イベント発生源クラス
-   * @param setting イベント定義を行う関数
-   */
-  from<T extends EventEmitter>(fromClass: new(...args: any[]) => T, setting: EventSetter<T, C>) {
-    this._routes.routeSettings.push({fromClass, controllerClass: this._controllerClass, setting});
   }
 }
