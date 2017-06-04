@@ -4,16 +4,11 @@ import {EventRouteSetter} from "./event_route_setter";
 import {LazyEventRouter} from "./lazy-event-router";
 
 /** ルーティング設定定義 */
-export interface EventRouting {
+export type EventRoutingDefiner =
   /**
-   * ルーティングをセットアップする
-   * @param routes ルーティング設定
+   * @param eventRouteSetter ルーティング設定
    */
-  setup(eventRouteSetter: EventRouteSetter): void;
-}
-
-/** ルーティング設定定義クラス */
-export type EventRoutingClass = new() => EventRouting;
+  (eventRouteSetter: EventRouteSetter) => void;
 
 /** イベントソースクラス */
 export type EventSourceClass<T extends EventEmitter> = new(...args: any[]) => T;
@@ -45,22 +40,21 @@ export class EventRoutes {
   routeSettings: RouteSetting[] = [];
 
   /**
-   * @param routingClasses ルーティング設定定義クラス(の配列)
+   * @param routingClasses ルーティング設定定義(の配列)
    */
-  constructor(routingClasses: EventRoutingClass | EventRoutingClass[] = []) {
+  constructor(eventRoutingDefiners: EventRoutingDefiner | EventRoutingDefiner[] = []) {
     this.routeSetter = new EventRouteSetter(this);
-    this.includeRoute(routingClasses);
+    this.includeRoute(eventRoutingDefiners);
   }
 
   /**
    * ルーティングを設定する
-   * @param routingClasses ルーティング設定定義クラス(の配列)
+   * @param routingClasses ルーティング設定定義(の配列)
    */
-  includeRoute(routingClasses: EventRoutingClass | EventRoutingClass[]) {
-    const _routingClasses = routingClasses instanceof Array ? routingClasses : [routingClasses];
-    for (const routeClass of _routingClasses) {
-      const routing = new routeClass();
-      routing.setup(this.routeSetter);
+  includeRoute(eventRoutingDefiners: EventRoutingDefiner | EventRoutingDefiner[]) {
+    const _eventRoutingDefiners = eventRoutingDefiners instanceof Array ? eventRoutingDefiners : [eventRoutingDefiners];
+    for (const eventRoutingDefiner of _eventRoutingDefiners) {
+      eventRoutingDefiner(this.routeSetter);
     }
     return this;
   }

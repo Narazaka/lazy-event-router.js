@@ -28,7 +28,7 @@ export class LazyEventRouter {
    */
   constructor(
     components: any[] = [],
-    routes: EventRoutes,
+    routes = new EventRoutes(),
   ) {
     this._routes = routes;
     this._controllers = new Map();

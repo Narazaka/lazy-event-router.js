@@ -4,19 +4,16 @@ import {
   EventController,
   EventRoutes,
   EventRouteSetter,
-  EventRouting,
   LazyEventRouter,
 } from "../src/lib/lazy-event-router";
 
 import * as assert from "power-assert";
 
-class MyUsefulRouting implements EventRouting {
-  setup(r: EventRouteSetter) {
-    r.fromAndController(MyEventSourceComponent, MyController, (from, controller) => {
-      from.on("myevent", controller.myaction);
-      from.on("plus", controller.plus);
-    });
-  }
+function myUsefulRouting(r: EventRouteSetter) {
+  r.fromAndController(MyEventSourceComponent, MyController, (from, controller) => {
+    from.on("myevent", controller.myaction);
+    from.on("plus", controller.plus);
+  });
 }
 
 class MyEventSourceComponent extends EventEmitter {
@@ -52,7 +49,7 @@ class MyController implements EventController {
 }
 
 describe("LazyEventRouter", () => {
-  const routes = () => new EventRoutes(MyUsefulRouting);
+  const routes = () => new EventRoutes(myUsefulRouting);
   const components = () => [new MyEventSourceComponent()];
 
   describe("#constructor", () => {

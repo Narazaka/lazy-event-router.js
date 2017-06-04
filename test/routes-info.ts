@@ -4,8 +4,7 @@ import {
   EventController,
   EventRoutes,
   EventRouteSetter,
-  EventRouting,
-  EventRoutingClass,
+  EventRoutingDefiner,
   LazyEventRouter,
 } from "../src/lib/lazy-event-router";
 
@@ -61,59 +60,53 @@ class Controller2 implements EventController {
   }
 }
 
-class MyRoutingWithFrom implements EventRouting {
-  setup(r: EventRouteSetter) {
-    r.from(From1, (r2) => {
-      r2.controller(Controller1, (from, controller) => {
-        from.on("event1", controller.action1);
-        from.on("event2", controller.action2);
-      });
-    });
-    r.from(From2, (r2) => {
-      r2.controller(Controller1, (from, controller) => {
-        from.on("event3", controller.action3);
-      });
-    });
-    r.from(From2, (r2) => {
-      r2.controller(Controller2, (from, controller) => {
-        from.on("event4", controller.action4);
-      });
-    });
-  }
-}
-
-class MyRoutingWithController implements EventRouting {
-  setup(r: EventRouteSetter) {
-    r.controller(Controller1, (r2) => {
-      r2.from(From1, (from, controller) => {
-        from.on("event1", controller.action1);
-        from.on("event2", controller.action2);
-      });
-      r2.from(From2, (from, controller) => {
-        from.on("event3", controller.action3);
-      });
-    });
-    r.controller(Controller2, (r2) => {
-      r2.from(From2, (from, controller) => {
-        from.on("event4", controller.action4);
-      });
-    });
-  }
-}
-
-class MyRoutingWithFromAndController implements EventRouting {
-  setup(r: EventRouteSetter) {
-    r.fromAndController(From1, Controller1, (from, controller) => {
+function myRoutingWithFrom(r: EventRouteSetter) {
+  r.from(From1, (r2) => {
+    r2.controller(Controller1, (from, controller) => {
       from.on("event1", controller.action1);
       from.on("event2", controller.action2);
     });
-    r.fromAndController(From2, Controller1, (from, controller) => {
+  });
+  r.from(From2, (r2) => {
+    r2.controller(Controller1, (from, controller) => {
       from.on("event3", controller.action3);
     });
-    r.fromAndController(From2, Controller2, (from, controller) => {
+  });
+  r.from(From2, (r2) => {
+    r2.controller(Controller2, (from, controller) => {
       from.on("event4", controller.action4);
     });
-  }
+  });
+}
+
+function myRoutingWithController(r: EventRouteSetter) {
+  r.controller(Controller1, (r2) => {
+    r2.from(From1, (from, controller) => {
+      from.on("event1", controller.action1);
+      from.on("event2", controller.action2);
+    });
+    r2.from(From2, (from, controller) => {
+      from.on("event3", controller.action3);
+    });
+  });
+  r.controller(Controller2, (r2) => {
+    r2.from(From2, (from, controller) => {
+      from.on("event4", controller.action4);
+    });
+  });
+}
+
+function myRoutingWithFromAndController(r: EventRouteSetter) {
+  r.fromAndController(From1, Controller1, (from, controller) => {
+    from.on("event1", controller.action1);
+    from.on("event2", controller.action2);
+  });
+  r.fromAndController(From2, Controller1, (from, controller) => {
+    from.on("event3", controller.action3);
+  });
+  r.fromAndController(From2, Controller2, (from, controller) => {
+    from.on("event4", controller.action4);
+  });
 }
 
 const from1Routes = new RegExp([
@@ -133,29 +126,29 @@ const allRoutes = new RegExp([
 
 if (From1.name) { // IE not supports Function#name
   describe("LazyEventRouter", () => {
-    const subject = (components: EventEmitter[], routing: EventRoutingClass | EventRoutingClass[]) =>
+    const subject = (components: EventEmitter[], routing: EventRoutingDefiner | EventRoutingDefiner[]) =>
       new LazyEventRouter(components, new EventRoutes(routing));
     describe("#toString", () => {
       context("by froms", () => {
         it("surely registered", () => {
-          assert(from1Routes.test(subject([new From1()], MyRoutingWithFromAndController).toString()));
-          assert(from2Routes.test(subject([new From2()], MyRoutingWithFromAndController).toString()));
-          assert(allRoutes.test(subject([new From1(), new From2()], MyRoutingWithFromAndController).toString()));
+          assert(from1Routes.test(subject([new From1()], myRoutingWithFromAndController).toString()));
+          assert(from2Routes.test(subject([new From2()], myRoutingWithFromAndController).toString()));
+          assert(allRoutes.test(subject([new From1(), new From2()], myRoutingWithFromAndController).toString()));
         });
       });
       context("from()", () => {
         it("surely registered", () => {
-          assert(allRoutes.test(subject([new From1(), new From2()], MyRoutingWithFrom).toString()));
+          assert(allRoutes.test(subject([new From1(), new From2()], myRoutingWithFrom).toString()));
         });
       });
       context("controller()", () => {
         it("surely registered", () => {
-          assert(allRoutes.test(subject([new From1(), new From2()], MyRoutingWithController).toString()));
+          assert(allRoutes.test(subject([new From1(), new From2()], myRoutingWithController).toString()));
         });
       });
       context("fromAndController()", () => {
         it("surely registered", () => {
-          assert(allRoutes.test(subject([new From1(), new From2()], MyRoutingWithFromAndController).toString()));
+          assert(allRoutes.test(subject([new From1(), new From2()], myRoutingWithFromAndController).toString()));
         });
       });
     });
@@ -170,27 +163,27 @@ if (From1.name) { // IE not supports Function#name
       });
       context("single routing classes", () => {
         it("surely initialized", () => {
-          assert(new EventRoutes(MyRoutingWithFrom) instanceof EventRoutes);
+          assert(new EventRoutes(myRoutingWithFrom) instanceof EventRoutes);
         });
       });
       context("multiple routing classes", () => {
         it("surely initialized", () => {
-          assert(new EventRoutes([MyRoutingWithFrom, MyRoutingWithController]) instanceof EventRoutes);
+          assert(new EventRoutes([myRoutingWithFrom, myRoutingWithController]) instanceof EventRoutes);
         });
       });
     });
 
     describe("#includeRoute", () => {
-      const subject = (components: EventEmitter[], routing: EventRoutingClass | EventRoutingClass[]) =>
+      const subject = (components: EventEmitter[], routing: EventRoutingDefiner | EventRoutingDefiner[]) =>
         new LazyEventRouter(components, new EventRoutes().includeRoute(routing));
       context("single routing classes", () => {
         it("surely included", () => {
-          assert(allRoutes.test(subject([new From1(), new From2()], MyRoutingWithFromAndController).toString()));
+          assert(allRoutes.test(subject([new From1(), new From2()], myRoutingWithFromAndController).toString()));
         });
       });
       context("multiple routing classes", () => {
         it ("surely included", () => {
-          assert(allRoutes.test(subject([new From1(), new From2()], [MyRoutingWithFromAndController]).toString()));
+          assert(allRoutes.test(subject([new From1(), new From2()], [myRoutingWithFromAndController]).toString()));
         });
       });
     });
