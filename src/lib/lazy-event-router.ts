@@ -73,7 +73,7 @@ export class LazyEventRouter {
     if (this.hasComponent(componentClass)) this.unregisterComponent(componentClass);
     this._components.set(componentClass, component);
     this.routes.routeSettings
-      .filter((routeSetting) => routeSetting.sourceClass === component.constructor)
+      .filter((routeSetting) => routeSetting.eventSourceClass === component.constructor)
       .forEach((routeSetting) => this._attachRouteEvent(routeSetting));
   }
 
@@ -116,7 +116,7 @@ export class LazyEventRouter {
   }
 
   private _attachRouteEvent(routeSetting: RouteSetting) {
-    const component = this.component(routeSetting.sourceClass);
+    const component = this.component(routeSetting.eventSourceClass);
     const controllerClass = routeSetting.controllerClass;
     let controller = this.controller(controllerClass);
     if (!controller) {

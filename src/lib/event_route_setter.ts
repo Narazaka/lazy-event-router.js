@@ -15,21 +15,21 @@ export class EventRouteSetter {
   }
 
   /**
-   * イベント発生源を前提とする
-   * @param sourceClass イベント発生源クラス
+   * イベントソースを前提とする
+   * @param eventSourceClass イベント発生源クラス
    * @param setting イベント定義を行う関数
    */
   from<T extends EventEmitter>(
-    sourceClass: EventSourceClass<T>,
+    eventSourceClass: EventSourceClass<T>,
     setting: (routes: EventRouteSetterWithFrom<T>) => void,
   ) {
-    const routes = new EventRouteSetterWithFrom(this._routes, sourceClass);
+    const routes = new EventRouteSetterWithFrom(this._routes, eventSourceClass);
     setting(routes);
     return this;
   }
 
   /**
-   * controllerを前提とする
+   * コントローラーを前提とする
    * @param controllerClass コントローラークラス
    * @param setting イベント定義を行う関数
    */
@@ -43,17 +43,17 @@ export class EventRouteSetter {
   }
 
   /**
-   * fromとcontrollerを前提としてイベントを定義する
-   * @param sourceClass イベント発生源クラス
+   * イベントソースとコントローラーを前提としてイベントを定義する
+   * @param eventSourceClass イベントソースクラス
    * @param controllerClass コントローラークラス
    * @param setting イベント定義を行う関数
    */
   fromAndController<T extends EventEmitter, C>(
-    sourceClass: EventSourceClass<T>,
+    eventSourceClass: EventSourceClass<T>,
     controllerClass: EventControllerClass<C>,
     setting: EventSetter<T, C>,
   ) {
-    this._routes.routeSettings.push({sourceClass, controllerClass, setting});
+    this._routes.routeSettings.push({eventSourceClass, controllerClass, setting});
     return this;
   }
 }
