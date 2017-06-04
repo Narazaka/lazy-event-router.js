@@ -78,7 +78,6 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_src_lib_event_routes_.eventcontroller.html" class="tsd-kind-icon">Event<wbr>Controller</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_src_lib_event_routes_.eventrouting.html" class="tsd-kind-icon">Event<wbr>Routing</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_src_lib_event_routes_.routesetting.html" class="tsd-kind-icon">Route<wbr>Setting</a></li>
 							</ul>
 						</section>
@@ -86,7 +85,7 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_src_lib_event_routes_.html#eventcontrollerclass" class="tsd-kind-icon">Event<wbr>Controller<wbr>Class</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_src_lib_event_routes_.html#eventroutingclass" class="tsd-kind-icon">Event<wbr>Routing<wbr>Class</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-kind-icon">Event<wbr>Routing<wbr>Definer</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_src_lib_event_routes_.html#eventsetter" class="tsd-kind-icon">Event<wbr>Setter</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_src_lib_event_routes_.html#eventsourceclass" class="tsd-kind-icon">Event<wbr>Source<wbr>Class</a></li>
 							</ul>
@@ -102,7 +101,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Controller<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L26">src/lib/event_routes.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L21">src/lib/event_routes.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -117,22 +116,45 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
-					<a name="eventroutingclass" class="tsd-anchor"></a>
-					<h3>Event<wbr>Routing<wbr>Class</h3>
-					<div class="tsd-signature tsd-kind-icon">Event<wbr>Routing<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<a name="eventroutingdefiner" class="tsd-anchor"></a>
+					<h3>Event<wbr>Routing<wbr>Definer</h3>
+					<div class="tsd-signature tsd-kind-icon">Event<wbr>Routing<wbr>Definer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L16">src/lib/event_routes.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L7">src/lib/event_routes.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>ルーティング設定定義クラス</p>
+							<p>ルーティング設定定義</p>
 						</div>
 					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>eventRouteSetter<span class="tsd-signature-symbol">: </span><a href="../classes/_src_lib_event_route_setter_.eventroutesetter.html" class="tsd-signature-type">EventRouteSetter</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+										</div>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>eventRouteSetter: <a href="../classes/_src_lib_event_route_setter_.eventroutesetter.html" class="tsd-signature-type">EventRouteSetter</a></h5>
+												<div class="tsd-comment tsd-typography">
+													<div class="lead">
+														<p>ルーティング設定</p>
+													</div>
+												</div>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
 				</section>
@@ -142,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Setter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L29">src/lib/event_routes.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L24">src/lib/event_routes.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -181,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Source<wbr>Class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L19">src/lib/event_routes.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L14">src/lib/event_routes.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -274,16 +296,13 @@
 						<a href="../interfaces/_src_lib_event_routes_.eventcontroller.html" class="tsd-kind-icon">Event<wbr>Controller</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="../interfaces/_src_lib_event_routes_.eventrouting.html" class="tsd-kind-icon">Event<wbr>Routing</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_src_lib_event_routes_.routesetting.html" class="tsd-kind-icon">Route<wbr>Setting</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_src_lib_event_routes_.html#eventcontrollerclass" class="tsd-kind-icon">Event<wbr>Controller<wbr>Class</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="_src_lib_event_routes_.html#eventroutingclass" class="tsd-kind-icon">Event<wbr>Routing<wbr>Class</a>
+						<a href="_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-kind-icon">Event<wbr>Routing<wbr>Definer</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_src_lib_event_routes_.html#eventsetter" class="tsd-kind-icon">Event<wbr>Setter</a>
