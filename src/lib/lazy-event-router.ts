@@ -36,13 +36,13 @@ export class LazyEventRouter {
    * Controller
    */
   controller<T>(controllerClass: new(eventRouterHub: LazyEventRouter) => T) {
-    return <T> this._controllers.get(controllerClass);
+    return this._controllers.get(controllerClass);
   }
 
   /**
    * Component
    */
-  component<T>(componentClass: new(...args: any[]) => T) { return <T> this._components.get(componentClass); }
+  component<T>(componentClass: new(...args: any[]) => T) { return this._components.get(componentClass); }
 
   /**
    * has Component?
@@ -119,7 +119,7 @@ export class LazyEventRouter {
     const controllerClass = routeSetting.controllerClass;
     let controller = this.controller(controllerClass);
     if (!controller) {
-      controller = new controllerClass(this);
+      controller = new controllerClass(this) as EventController;
       bindAll(controller); // イベント定義の便利化とイベント登録解除のため
       this._controllers.set(controllerClass, controller);
     }
