@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import {EventEmitter} from "events";
 import {EventRegisterer} from "./event_registerer";
 import {EventController, EventRoutes, RouteSetting} from "./event_routes";
@@ -74,7 +73,7 @@ export class LazyEventRouter {
     if (this.hasComponent(componentClass)) this.unregisterComponent(componentClass);
     this._components.set(componentClass, component);
     this.routes.routeSettings
-      .filter((routeSetting) => routeSetting.fromClass === component.constructor)
+      .filter((routeSetting) => routeSetting.sourceClass === component.constructor)
       .forEach((routeSetting) => this._attachRouteEvent(routeSetting));
   }
 
@@ -117,7 +116,7 @@ export class LazyEventRouter {
   }
 
   private _attachRouteEvent(routeSetting: RouteSetting) {
-    const component = this.component(routeSetting.fromClass);
+    const component = this.component(routeSetting.sourceClass);
     const controllerClass = routeSetting.controllerClass;
     let controller = this.controller(controllerClass);
     if (!controller) {

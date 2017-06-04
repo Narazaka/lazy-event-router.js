@@ -1,14 +1,13 @@
 import {EventEmitter} from "events";
-import {EventRoutes, EventSetter} from "./event_routes";
-import {LazyEventRouter} from "./lazy-event-router";
+import {EventControllerClass, EventRoutes, EventSetter, EventSourceClass} from "./event_routes";
 
 export class EventRouteSetterWithFrom<T extends EventEmitter> {
-  private _fromClass: new(...args: any[]) => T;
+  private _sourceClass: EventSourceClass<T>;
   private _routes: EventRoutes;
 
-  constructor(routes: EventRoutes, fromClass: new(...args: any[]) => T) {
+  constructor(routes: EventRoutes, sourceClass: EventSourceClass<T>) {
     this._routes = routes;
-    this._fromClass = fromClass;
+    this._sourceClass = sourceClass;
   }
 
   /**
@@ -16,7 +15,7 @@ export class EventRouteSetterWithFrom<T extends EventEmitter> {
    * @param controllerClass コントローラークラス
    * @param setting イベント定義を行う関数
    */
-  controller<C>(controllerClass: new(eventRouterHub: LazyEventRouter) => C, setting: EventSetter<T, C>) {
-    this._routes.routeSettings.push({fromClass: this._fromClass, controllerClass, setting});
+  controller<C>(controllerClass: EventControllerClass<C>, setting: EventSetter<T, C>) {
+    this._routes.routeSettings.push({sourceClass: this._sourceClass, controllerClass, setting});
   }
 }

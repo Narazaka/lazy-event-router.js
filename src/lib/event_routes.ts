@@ -8,18 +8,21 @@ export interface EventRouting {
    * ルーティングをセットアップする
    * @param routes ルーティング設定
    */
-  setup(routes: EventRouteSetter): void;
+  setup(eventRouteSetter: EventRouteSetter): void;
 }
 
 /** ルーティング設定定義クラス */
 export type EventRoutingClass = new() => EventRouting;
+
+/** イベントソースクラス */
+export type EventSourceClass<T extends EventEmitter> = new(...args: any[]) => T;
 
 /** コントローラ */
 export interface EventController {
 }
 
 /** コントローラクラス */
-export type EventControllerClass = new(eventRouterHub: LazyEventRouter) => EventController;
+export type EventControllerClass<C extends EventController> = new(lazyEventRouter: LazyEventRouter) => C;
 
 /** イベントを定義するコールバック関数 */
 export type EventSetter<T extends EventEmitter, C> = (from: T, controller: C) => void;
@@ -27,9 +30,9 @@ export type EventSetter<T extends EventEmitter, C> = (from: T, controller: C) =>
 /** ルーティングの設定 */
 export type RouteSetting = {
   /** イベントソースクラス */
-  fromClass: new(...args: any[]) => EventEmitter,
+  sourceClass: EventSourceClass<EventEmitter>,
   /** コントローラクラス */
-  controllerClass: EventControllerClass,
+  controllerClass: EventControllerClass<EventController>,
   /** イベントの定義 */
   setting: EventSetter<EventEmitter, any>,
 };
@@ -42,7 +45,7 @@ export class EventRoutes {
 
   /**
    * コンストラクタ
-   * @param routingClasses ルート定義クラス(の配列)
+   * @param routingClasses ルーティング設定定義クラス(の配列)
    */
   constructor(routingClasses: EventRoutingClass | EventRoutingClass[] = []) {
     this.routeSetter = new EventRouteSetter(this);
@@ -51,7 +54,7 @@ export class EventRoutes {
 
   /**
    * ルートを設定する
-   * @param routingClasses ルート定義クラス(の配列)
+   * @param routingClasses ルーティング設定定義クラス(の配列)
    */
   includeRoute(routingClasses: EventRoutingClass | EventRoutingClass[]) {
     const _routingClasses = routingClasses instanceof Array ? routingClasses : [routingClasses];
