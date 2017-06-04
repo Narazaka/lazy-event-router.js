@@ -7,7 +7,6 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
-	<script src="../assets/js/modernizr.js"></script>
 </head>
 <body>
 <header>
@@ -55,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_src_lib_lazy_event_router_.html">&quot;src/lib/lazy-event-router&quot;</a>
+					<a href="../modules/_src_lib_event_routes_.html">&quot;src/lib/event_routes&quot;</a>
 				</li>
 				<li>
-					<a href="_src_lib_lazy_event_router_.eventroutes.html">EventRoutes</a>
+					<a href="_src_lib_event_routes_.eventroutes.html">EventRoutes</a>
 				</li>
 			</ul>
 			<h1>Class EventRoutes</h1>
@@ -71,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>イベントのルーティング設定</p>
+						<p>イベントの全ルーティング設定</p>
 					</div>
 				</div>
 			</section>
@@ -90,20 +89,20 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_src_lib_lazy_event_router_.eventroutes.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_src_lib_lazy_event_router_.eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_src_lib_lazy_event_router_.eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_lib_lazy_event_router_.eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,32 +114,29 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Routes<span class="tsd-signature-symbol">(</span>routingClasses<span class="tsd-signature-symbol">?: </span><a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_lib_lazy_event_router_.eventroutes.html" class="tsd-signature-type">EventRoutes</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Routes<span class="tsd-signature-symbol">(</span>routingClasses<span class="tsd-signature-symbol">?: </span><a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_lib_event_routes_.eventroutes.html" class="tsd-signature-type">EventRoutes</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/6a45646/src/lib/lazy-event-router.ts#L276">src/lib/lazy-event-router.ts:276</a></li>
+									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L45">src/lib/event_routes.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>コンストラクタ</p>
-								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> routingClasses: <a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> routingClasses: <a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>ルート定義クラス(の配列)</p>
+											<p>ルーティング設定定義クラス(の配列)</p>
 										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_src_lib_lazy_event_router_.eventroutes.html" class="tsd-signature-type">EventRoutes</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_src_lib_event_routes_.eventroutes.html" class="tsd-signature-type">EventRoutes</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -150,22 +146,27 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="routesetter" class="tsd-anchor"></a>
 					<h3>route<wbr>Setter</h3>
-					<div class="tsd-signature tsd-kind-icon">route<wbr>Setter<span class="tsd-signature-symbol">:</span> <a href="_src_lib_lazy_event_router_.eventroutesetter.html" class="tsd-signature-type">EventRouteSetter</a></div>
+					<div class="tsd-signature tsd-kind-icon">route<wbr>Setter<span class="tsd-signature-symbol">:</span> <a href="_src_lib_event_route_setter_.eventroutesetter.html" class="tsd-signature-type">EventRouteSetter</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/6a45646/src/lib/lazy-event-router.ts#L275">src/lib/lazy-event-router.ts:275</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L43">src/lib/event_routes.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="routesettings" class="tsd-anchor"></a>
 					<h3>route<wbr>Settings</h3>
-					<div class="tsd-signature tsd-kind-icon">route<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="../modules/_src_lib_lazy_event_router_.html#routesetting" class="tsd-signature-type">RouteSetting</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">route<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_src_lib_event_routes_.routesetting.html" class="tsd-signature-type">RouteSetting</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/6a45646/src/lib/lazy-event-router.ts#L276">src/lib/lazy-event-router.ts:276</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L45">src/lib/event_routes.ts:45</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>ルーティングの設定群</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -174,26 +175,26 @@
 					<a name="includeroute" class="tsd-anchor"></a>
 					<h3>include<wbr>Route</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">include<wbr>Route<span class="tsd-signature-symbol">(</span>routingClasses<span class="tsd-signature-symbol">: </span><a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">include<wbr>Route<span class="tsd-signature-symbol">(</span>routingClasses<span class="tsd-signature-symbol">: </span><a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/6a45646/src/lib/lazy-event-router.ts#L291">src/lib/lazy-event-router.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/dbeb7db/src/lib/event_routes.ts#L59">src/lib/event_routes.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>ルートを設定する</p>
+									<p>ルーティングを設定する</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>routingClasses: <a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-signature-type">EventRoutingConstructor</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>routingClasses: <a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-signature-type">EventRoutingClass</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>ルート定義クラス(の配列)</p>
+										<p>ルーティング設定定義クラス(の配列)</p>
 									</div>
 								</li>
 							</ul>
@@ -212,69 +213,108 @@
 					<li class="label tsd-is-external">
 						<span>Internals</span>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_lib_event_registerer_.html">"src/lib/event_<wbr>registerer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_lib_event_route_setter_.html">"src/lib/event_<wbr>route_<wbr>setter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_lib_event_route_setter_with_controller_.html">"src/lib/event_<wbr>route_<wbr>setter_<wbr>with_<wbr>controller"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_lib_event_route_setter_with_from_.html">"src/lib/event_<wbr>route_<wbr>setter_<wbr>with_<wbr>from"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
+						<a href="../modules/_src_lib_event_routes_.html">"src/lib/event_<wbr>routes"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_src_lib_lazy_event_router_.html">"src/lib/lazy-<wbr>event-<wbr>router"</a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_empower_index_d_.html">"node_<wbr>modules/@types/empower/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_fs_extra_index_d_.html">"node_<wbr>modules/@types/fs-<wbr>extra/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_handlebars_index_d_.html">"node_<wbr>modules/@types/handlebars/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_highlight_js_index_d_.html">"node_<wbr>modules/@types/highlight.js/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_lodash_index_d_.html">"node_<wbr>modules/@types/lodash/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_marked_index_d_.html">"node_<wbr>modules/@types/marked/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_minimatch_index_d_.html">"node_<wbr>modules/@types/minimatch/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_mocha_index_d_.html">"node_<wbr>modules/@types/mocha/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_node_modules__types_node_index_d_.html">"node_<wbr>modules/@types/node/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_power_assert_formatter_index_d_.html">"node_<wbr>modules/@types/power-<wbr>assert-<wbr>formatter/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_power_assert_index_d_.html">"node_<wbr>modules/@types/power-<wbr>assert/index.d"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/_node_modules__types_shelljs_index_d_.html">"node_<wbr>modules/@types/shelljs/index.d"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_src_lib_lazy_event_router_.eventroutesetter.html" class="tsd-kind-icon">Event<wbr>Route<wbr>Setter</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_src_lib_lazy_event_router_.eventroutesetterwithcontroller.html" class="tsd-kind-icon">Event<wbr>Route<wbr>Setter<wbr>With<wbr>Controller</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_src_lib_lazy_event_router_.eventroutesetterwithfrom.html" class="tsd-kind-icon">Event<wbr>Route<wbr>Setter<wbr>With<wbr>From</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_src_lib_lazy_event_router_.eventroutes.html" class="tsd-kind-icon">Event<wbr>Routes</a>
+						<a href="_src_lib_event_routes_.eventroutes.html" class="tsd-kind-icon">Event<wbr>Routes</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_src_lib_lazy_event_router_.eventroutes.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_src_lib_event_routes_.eventroutes.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_src_lib_lazy_event_router_.eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a>
+								<a href="_src_lib_event_routes_.eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_src_lib_lazy_event_router_.eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a>
+								<a href="_src_lib_event_routes_.eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_src_lib_lazy_event_router_.eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a>
+								<a href="_src_lib_event_routes_.eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_src_lib_lazy_event_router_.lazyeventrouter.html" class="tsd-kind-icon">Lazy<wbr>Event<wbr>Router</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_src_lib_event_routes_.eventcontroller.html" class="tsd-kind-icon">Event<wbr>Controller</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="../interfaces/_src_lib_lazy_event_router_.eventcontroller.html" class="tsd-kind-icon">Event<wbr>Controller</a>
+						<a href="../interfaces/_src_lib_event_routes_.eventrouting.html" class="tsd-kind-icon">Event<wbr>Routing</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="../interfaces/_src_lib_lazy_event_router_.eventrouting.html" class="tsd-kind-icon">Event<wbr>Routing</a>
+						<a href="../interfaces/_src_lib_event_routes_.routesetting.html" class="tsd-kind-icon">Route<wbr>Setting</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_lazy_event_router_.html#eventcontrollerconstructor" class="tsd-kind-icon">Event<wbr>Controller<wbr>Constructor</a>
+						<a href="../modules/_src_lib_event_routes_.html#eventcontrollerclass" class="tsd-kind-icon">Event<wbr>Controller<wbr>Class</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_lazy_event_router_.html#eventroutingconstructor" class="tsd-kind-icon">Event<wbr>Routing<wbr>Constructor</a>
+						<a href="../modules/_src_lib_event_routes_.html#eventroutingclass" class="tsd-kind-icon">Event<wbr>Routing<wbr>Class</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_lazy_event_router_.html#eventsetter" class="tsd-kind-icon">Event<wbr>Setter</a>
+						<a href="../modules/_src_lib_event_routes_.html#eventsetter" class="tsd-kind-icon">Event<wbr>Setter</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_lazy_event_router_.html#routesetting" class="tsd-kind-icon">Route<wbr>Setting</a>
+						<a href="../modules/_src_lib_event_routes_.html#eventsourceclass" class="tsd-kind-icon">Event<wbr>Source<wbr>Class</a>
 					</li>
 				</ul>
 			</nav>
@@ -341,7 +381,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
