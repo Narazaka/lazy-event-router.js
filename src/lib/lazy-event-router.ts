@@ -1,14 +1,12 @@
 import {EventEmitter} from "events";
 import {EventListener, EventRegisterer} from "./event_registerer";
-import {EventController, EventControllerClass, EventRoutes, RouteSetting} from "./event_routes";
+import {ComponentClass, EventController, EventControllerClass, EventRoutes, RouteSetting} from "./event_routes";
 
 export * from "./event_registerer";
 export * from "./event_route_setter";
 export * from "./event_route_setter_with_controller";
 export * from "./event_route_setter_with_from";
 export * from "./event_routes";
-
-export type ComponentClass<T> = new(...args: any[]) => T;
 
 /**
  * ルーティング可能なコンポーネント

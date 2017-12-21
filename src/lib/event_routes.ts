@@ -10,6 +10,9 @@ export type EventRoutingDefiner =
    */
   (eventRouteSetter: EventRouteSetter) => void;
 
+/** コンポーネントクラス */
+export type ComponentClass<T> = new(...args: any[]) => T;
+
 /** イベントソースクラス */
 export type EventSourceClass<T extends EventEmitter> = new(...args: any[]) => T;
 
