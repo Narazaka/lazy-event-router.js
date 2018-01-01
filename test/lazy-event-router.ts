@@ -46,6 +46,10 @@ class MyController implements EventController {
   plus() {
     this.count++;
   }
+
+  get throw() { // not to exec property when binding all methods
+    throw new Error("error");
+  }
 }
 
 describe("LazyEventRouter", () => {

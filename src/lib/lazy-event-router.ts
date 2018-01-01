@@ -150,7 +150,9 @@ function allMethods(object: any) {
     for (const property of Object.getOwnPropertyNames(prototype)
       .concat(Object.getOwnPropertySymbols(prototype) as any[])
     ) {
-      if (typeof object[property] === "function") properties[property] = true;
+      // getterを実行しないように（getterは通常イベントの受け口に使われないのでbindはしなくて良い）
+      const descripter = Object.getOwnPropertyDescriptor(prototype, property);
+      if (descripter && typeof descripter.value === "function") properties[property] = true;
     }
     prototype = Object.getPrototypeOf(prototype);
   } while (Object.getPrototypeOf(prototype));
