@@ -94,13 +94,13 @@ export class LazyEventRouter {
     const component = this.component(componentClass);
     const listenersBycomponent = this._listeners.get(componentClass);
     if (component instanceof EventEmitter && listenersBycomponent) {
-      for (const listeners of listenersBycomponent.values()) {
+      listenersBycomponent.forEach((listeners) => {
         for (const event of Object.keys(listeners)) {
           for (const listener of listeners[event]) {
             component.removeListener(event, listener);
           }
         }
-      }
+      });
     }
     this._components.delete(componentClass);
     this._listeners.delete(componentClass);
@@ -147,9 +147,10 @@ function allMethods(object: any) {
   const properties: {[property: string]: boolean} = {};
   let prototype = object;
   do {
-    for (const property of Object.getOwnPropertyNames(prototype)
-      .concat(Object.getOwnPropertySymbols(prototype) as any[])
-    ) {
+    const _properties = Object.getOwnPropertyNames(prototype).concat(
+      Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(prototype) as any[] : [],
+    );
+    for (const property of _properties) {
       // getterを実行しないように（getterは通常イベントの受け口に使われないのでbindはしなくて良い）
       const descripter = Object.getOwnPropertyDescriptor(prototype, property);
       if (descripter && typeof descripter.value === "function") properties[property] = true;
