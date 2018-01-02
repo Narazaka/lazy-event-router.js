@@ -8,5 +8,6 @@ coverage
 .nyc_output
 dist
 web
+web-es5
 package-lock.json
 yarn.lock

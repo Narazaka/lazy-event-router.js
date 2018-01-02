@@ -1,6 +1,32 @@
-const config = require("webpack-config-narazaka-ts-js").node;
+const path = require("path");
+const tsconfig = require("./tsconfig.json");
 
-config.entry["lazy-event-router"] = "./src/lib/lazy-event-router.ts";
-config.output.library = "lazyEventRouter";
+tsconfig.compilerOptions.outDir = "web"; // for d.ts
 
-module.exports = config;
+module.exports = {
+  entry:  {"lazy-event-router": "./lib/lazy-event-router.ts"},
+  output: {
+    library:       "lazyEventRouter",
+    libraryTarget: "umd",
+    path:          path.resolve("."),
+    filename:      "web/lib/[name].js",
+  },
+  module: {
+    rules: [
+      {
+        test:    /\.ts$/,
+        loader:  "ts-loader",
+        exclude: /node_modules/,
+        options: {compilerOptions: tsconfig.compilerOptions},
+      },
+    ],
+  },
+  resolve: {
+    extensions: [
+      ".ts",
+      ".js",
+    ],
+  },
+  // externals: /^(?!^\.\/)/,
+  devtool: "source-map",
+};

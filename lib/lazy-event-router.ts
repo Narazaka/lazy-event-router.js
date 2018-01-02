@@ -112,15 +112,15 @@ export class LazyEventRouter {
    */
   toString() {
     const routes: string[] = [];
-    for (const [componentClass, listenersBycomponent] of this._listeners.entries()) {
-      for (const [controllerClass, listeners] of listenersBycomponent.entries()) {
+    this._listeners.forEach((listenersBycomponent, componentClass) => {
+      listenersBycomponent.forEach((listeners, controllerClass) => {
         for (const event of Object.keys(listeners)) {
           for (const listener of listeners[event]) {
             routes.push(`${componentClass.name}.${event} => ${controllerClass.name}#${listener.name}`);
           }
         }
-      }
-    }
+      });
+    });
     return routes.map((route) => route + "\n").join("");
   }
 

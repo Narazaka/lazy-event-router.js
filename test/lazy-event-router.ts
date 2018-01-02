@@ -5,7 +5,7 @@ import {
   EventRoutes,
   EventRouteSetter,
   LazyEventRouter,
-} from "../src/lib/lazy-event-router";
+} from "../lib/lazy-event-router";
 
 import * as assert from "power-assert";
 
