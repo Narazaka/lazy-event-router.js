@@ -6,7 +6,7 @@
 [![npm download by month](https://img.shields.io/npm/dm/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
 
 [![Dependency Status](https://david-dm.org/Narazaka/lazy-event-router.js.svg)](https://david-dm.org/Narazaka/lazy-event-router.js)
-[![devDependency Status](https://david-dm.org/Narazaka/lazy-event-router.js/dev-status.svg)](https://david-dm.org/Narazaka/lazy-event-router.js#info=devDependencies)
+[![devDependency Status](https://david-dm.org/Narazaka/lazy-event-router.js/dev-status.svg)](https://david-dm.org/Narazaka/lazy-event-router.js?type=dev)
 [![Travis Build Status](https://travis-ci.org/Narazaka/lazy-event-router.js.svg)](https://travis-ci.org/Narazaka/lazy-event-router.js)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Narazaka/lazy-event-router.js?svg=true)](https://ci.appveyor.com/project/Narazaka/lazy-event-router-js)
 [![codecov.io](https://codecov.io/github/Narazaka/lazy-event-router.js/coverage.svg?branch=master)](https://codecov.io/github/Narazaka/lazy-event-router.js?branch=master)
