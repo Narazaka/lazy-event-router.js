@@ -1,5 +1,7 @@
 # [lazy-event-router.js](https://github.com/Narazaka/lazy-event-router.js)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Narazaka/lazy-event-router.js.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
 [![npm license](https://img.shields.io/npm/l/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
 [![npm download total](https://img.shields.io/npm/dt/lazy-event-router.svg)](https://www.npmjs.com/package/lazy-event-router)
