@@ -86,6 +86,10 @@ export class EventRegisterer implements EventEmitter {
     return this._component.listenerCount(event);
   }
 
+  rawListeners(event: string | symbol) {
+    return this._component.rawListeners(event);
+  }
+
   private _listeners(event: string | symbol) {
     if (!this._allListeners[event]) this._allListeners[event] = [];
     return this._allListeners[event];
