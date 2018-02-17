@@ -13,9 +13,6 @@ before_script:
   - sleep 3 # give xvfb some time to start
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-cache:
-  directories:
-    - node_modules
 addons:
   firefox: latest-esr
   chrome: stable
