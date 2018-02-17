@@ -30,7 +30,7 @@
     "test-web-es5": "cross-env NODE_ENV=test NO_DETECT=1 karma start --single-run --browsers IE karma.conf.es5.js",
     "test-web-es2015": "cross-env NODE_ENV=test NO_IE=1 karma start --single-run",
     "docdist": "cd doc && git clean -fd && git rm -rf * && cd .. && npm run doc && cd doc && touch .nojekyll && git add . && git commit -m doc && git push",
-    "doc": "typedoc --mode modules --out doc --readme Readme.md --name \"API Document\" --disableOutputCheck --includeDeclarations --excludeNotExported lib && cd doc && git status && cd .."
+    "doc": "typedoc --mode file --out doc --disableOutputCheck --excludeNotExported lib && cd doc && git status && cd .."
   },
   "dependencies": {},
   "devDependencies": {
