@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EventRoutes | API Document</title>
+	<title>EventRoutes | lazy-event-router</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">API Document</a>
+					<a href="../index.html" class="title">lazy-event-router</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,10 +54,7 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_src_lib_event_routes_.html">&quot;src/lib/event_routes&quot;</a>
-				</li>
-				<li>
-					<a href="_src_lib_event_routes_.eventroutes.html">EventRoutes</a>
+					<a href="eventroutes.html">EventRoutes</a>
 				</li>
 			</ul>
 			<h1>Class EventRoutes</h1>
@@ -89,20 +86,20 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="eventroutes.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_lib_event_routes_.eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,13 +111,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Routes<span class="tsd-signature-symbol">(</span>eventRoutingDefiners<span class="tsd-signature-symbol">?: </span><a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_lib_event_routes_.eventroutes.html" class="tsd-signature-type">EventRoutes</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Routes<span class="tsd-signature-symbol">(</span>eventRoutingDefiners<span class="tsd-signature-symbol">?: </span><a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventroutes.html" class="tsd-signature-type">EventRoutes</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L40">src/lib/event_routes.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/23e778c/lib/event_routes.ts#L43">event_routes.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -128,10 +125,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> eventRoutingDefiners: <a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> eventRoutingDefiners: <a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_src_lib_event_routes_.eventroutes.html" class="tsd-signature-type">EventRoutes</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="eventroutes.html" class="tsd-signature-type">EventRoutes</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -141,20 +138,20 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="routesetter" class="tsd-anchor"></a>
 					<h3>route<wbr>Setter</h3>
-					<div class="tsd-signature tsd-kind-icon">route<wbr>Setter<span class="tsd-signature-symbol">:</span> <a href="_src_lib_event_route_setter_.eventroutesetter.html" class="tsd-signature-type">EventRouteSetter</a></div>
+					<div class="tsd-signature tsd-kind-icon">route<wbr>Setter<span class="tsd-signature-symbol">:</span> <a href="eventroutesetter.html" class="tsd-signature-type">EventRouteSetter</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L38">src/lib/event_routes.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/23e778c/lib/event_routes.ts#L41">event_routes.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="routesettings" class="tsd-anchor"></a>
 					<h3>route<wbr>Settings</h3>
-					<div class="tsd-signature tsd-kind-icon">route<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_src_lib_event_routes_.routesetting.html" class="tsd-signature-type">RouteSetting</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">route<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="../interfaces/routesetting.html" class="tsd-signature-type">RouteSetting</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L40">src/lib/event_routes.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/23e778c/lib/event_routes.ts#L43">event_routes.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -170,13 +167,13 @@
 					<a name="includeroute" class="tsd-anchor"></a>
 					<h3>include<wbr>Route</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">include<wbr>Route<span class="tsd-signature-symbol">(</span>eventRoutingDefiners<span class="tsd-signature-symbol">: </span><a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">include<wbr>Route<span class="tsd-signature-symbol">(</span>eventRoutingDefiners<span class="tsd-signature-symbol">: </span><a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/1f81ecd/src/lib/event_routes.ts#L54">src/lib/event_routes.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/Narazaka/lazy-event-router.js/blob/23e778c/lib/event_routes.ts#L57">event_routes.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -187,7 +184,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>eventRoutingDefiners: <a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>eventRoutingDefiners: <a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol"> | </span><a href="../globals.html#eventroutingdefiner" class="tsd-signature-type">EventRoutingDefiner</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -202,108 +199,69 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_lib_event_registerer_.html">"src/lib/event_<wbr>registerer"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_lib_event_route_setter_.html">"src/lib/event_<wbr>route_<wbr>setter"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_lib_event_route_setter_with_controller_.html">"src/lib/event_<wbr>route_<wbr>setter_<wbr>with_<wbr>controller"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_lib_event_route_setter_with_from_.html">"src/lib/event_<wbr>route_<wbr>setter_<wbr>with_<wbr>from"</a>
-					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_src_lib_event_routes_.html">"src/lib/event_<wbr>routes"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_lib_lazy_event_router_.html">"src/lib/lazy-<wbr>event-<wbr>router"</a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_empower_index_d_.html">"node_<wbr>modules/@types/empower/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_fs_extra_index_d_.html">"node_<wbr>modules/@types/fs-<wbr>extra/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_handlebars_index_d_.html">"node_<wbr>modules/@types/handlebars/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_highlight_js_index_d_.html">"node_<wbr>modules/@types/highlight.js/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_lodash_index_d_.html">"node_<wbr>modules/@types/lodash/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_marked_index_d_.html">"node_<wbr>modules/@types/marked/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_minimatch_index_d_.html">"node_<wbr>modules/@types/minimatch/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_mocha_index_d_.html">"node_<wbr>modules/@types/mocha/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_node_index_d_.html">"node_<wbr>modules/@types/node/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_power_assert_formatter_index_d_.html">"node_<wbr>modules/@types/power-<wbr>assert-<wbr>formatter/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_power_assert_index_d_.html">"node_<wbr>modules/@types/power-<wbr>assert/index.d"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_node_modules__types_shelljs_index_d_.html">"node_<wbr>modules/@types/shelljs/index.d"</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="eventregisterer.html" class="tsd-kind-icon">Event<wbr>Registerer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="eventroutesetter.html" class="tsd-kind-icon">Event<wbr>Route<wbr>Setter</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="eventroutesetterwithcontroller.html" class="tsd-kind-icon">Event<wbr>Route<wbr>Setter<wbr>With<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="eventroutesetterwithfrom.html" class="tsd-kind-icon">Event<wbr>Route<wbr>Setter<wbr>With<wbr>From</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_src_lib_event_routes_.eventroutes.html" class="tsd-kind-icon">Event<wbr>Routes</a>
+					<li class="current tsd-kind-class">
+						<a href="eventroutes.html" class="tsd-kind-icon">Event<wbr>Routes</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_src_lib_event_routes_.eventroutes.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="eventroutes.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_src_lib_event_routes_.eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a>
+								<a href="eventroutes.html#routesetter" class="tsd-kind-icon">route<wbr>Setter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_src_lib_event_routes_.eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a>
+								<a href="eventroutes.html#routesettings" class="tsd-kind-icon">route<wbr>Settings</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_src_lib_event_routes_.eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a>
+								<a href="eventroutes.html#includeroute" class="tsd-kind-icon">include<wbr>Route</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="../interfaces/_src_lib_event_routes_.eventcontroller.html" class="tsd-kind-icon">Event<wbr>Controller</a>
+					<li class=" tsd-kind-class">
+						<a href="lazyeventrouter.html" class="tsd-kind-icon">Lazy<wbr>Event<wbr>Router</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="../interfaces/_src_lib_event_routes_.routesetting.html" class="tsd-kind-icon">Route<wbr>Setting</a>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/eventcontroller.html" class="tsd-kind-icon">Event<wbr>Controller</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_event_routes_.html#eventcontrollerclass" class="tsd-kind-icon">Event<wbr>Controller<wbr>Class</a>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/routesetting.html" class="tsd-kind-icon">Route<wbr>Setting</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_event_routes_.html#eventroutingdefiner" class="tsd-kind-icon">Event<wbr>Routing<wbr>Definer</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#componentclass" class="tsd-kind-icon">Component<wbr>Class</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_event_routes_.html#eventsetter" class="tsd-kind-icon">Event<wbr>Setter</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#eventcontrollerclass" class="tsd-kind-icon">Event<wbr>Controller<wbr>Class</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_src_lib_event_routes_.html#eventsourceclass" class="tsd-kind-icon">Event<wbr>Source<wbr>Class</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#eventlistener" class="tsd-kind-icon">Event<wbr>Listener</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="../globals.html#eventroutingdefiner" class="tsd-kind-icon">Event<wbr>Routing<wbr>Definer</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#eventsetter" class="tsd-kind-icon">Event<wbr>Setter</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#eventsourceclass" class="tsd-kind-icon">Event<wbr>Source<wbr>Class</a>
 					</li>
 				</ul>
 			</nav>
