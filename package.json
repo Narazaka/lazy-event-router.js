@@ -1,6 +1,6 @@
 {
   "name": "lazy-event-router",
-  "version": "8.0.3",
+  "version": "8.0.4",
   "description": "an event router",
   "keywords": [],
   "main": "./dist/lib/lazy-event-router.js",
