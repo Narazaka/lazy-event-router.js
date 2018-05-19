@@ -41,6 +41,14 @@ export class EventRegisterer implements EventEmitter {
     return this;
   }
 
+  off(event: string | symbol, listener: EventListener) {
+    this._component.off(event, listener);
+    const listeners = this._listeners(event);
+    const index = listeners.indexOf(listener);
+    if (index !== -1) listeners.splice(index, 1);
+    return this;
+  }
+
   removeListener(event: string | symbol, listener: EventListener) {
     this._component.removeListener(event, listener);
     const listeners = this._listeners(event);
