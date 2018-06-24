@@ -60,7 +60,7 @@ export class EventRegisterer implements EventEmitter {
   removeAllListeners(event?: string | symbol) {
     this._component.removeAllListeners(event);
     if (event) {
-      delete this._allListeners[event];
+      delete this._allListeners[event as string];
     } else {
       for (const _event of Object.keys(this._allListeners)) {
         delete this._allListeners[_event];
@@ -99,7 +99,7 @@ export class EventRegisterer implements EventEmitter {
   }
 
   private _listeners(event: string | symbol) {
-    if (!this._allListeners[event]) this._allListeners[event] = [];
-    return this._allListeners[event];
+    if (!this._allListeners[event as string]) this._allListeners[event as string] = [];
+    return this._allListeners[event as string];
   }
 }
