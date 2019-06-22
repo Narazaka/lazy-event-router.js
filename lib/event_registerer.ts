@@ -1,6 +1,6 @@
 import {EventEmitter} from "events";
 
-export type EventListener = (...args: any[]) => any;
+export type EventListener = (...args: any[]) => void;
 
 export class EventRegisterer implements EventEmitter {
   private _allListeners: {[eventName: string]: EventListener[]};
