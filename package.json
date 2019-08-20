@@ -47,7 +47,7 @@
     "istanbul-instrumenter-loader": "^3.0.0",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
-    "karma-coverage": "^1.1.1",
+    "karma-coverage": "^2.0.0",
     "karma-detect-browsers": "^2.2.6",
     "karma-edge-launcher": "^0.4.2",
     "karma-espower-preprocessor": "^1.1.1",
